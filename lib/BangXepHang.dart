@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:giaodien/Thongtin.dart';
 
-// void main() {
-//   runApp(const BangXepHang());
-// }
-
 class BangXepHang extends StatefulWidget {
   const BangXepHang({super.key});
 

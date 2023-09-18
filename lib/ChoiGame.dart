@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:giaodien/ChoiDon.dart';
 import 'package:giaodien/KetThucGame.dart';
-
 import 'package:giaodien/list-question.dart';
 
 // void main() {
@@ -19,7 +18,7 @@ class ChoiGame extends StatefulWidget {
 }
 
 class _ChoiGameState extends State<ChoiGame> {
-  List<ListItem> lst = new List<ListItem>.filled(
+  List<ListItem> lst = List<ListItem>.filled(
       0,
       ListItem(
           question: '',
@@ -69,6 +68,7 @@ class _ChoiGameState extends State<ChoiGame> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
@@ -137,7 +137,7 @@ class _ChoiGameState extends State<ChoiGame> {
         int lv = widget.level;
         if (checkHighScore(dataList[0]['ai$lv'].toString(), score) == true) {
           final highscore =
-              FirebaseFirestore.instance.collection('highscore').doc('$docid');
+              FirebaseFirestore.instance.collection('highscore').doc(docid);
           highscore.update({'ai$lv': score.toString()});
         }
 
@@ -164,9 +164,9 @@ class _ChoiGameState extends State<ChoiGame> {
       body: Container(
         width: 1080,
         height: 1920,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Center(

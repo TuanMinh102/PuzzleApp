@@ -20,7 +20,6 @@ class TrangChu extends StatefulWidget {
 class _TrangChuState extends State<TrangChu> {
   List dataList = [];
   List<String> arr = ['username', 'email'];
-  @override
   fetchDatabaseList() async {
     // dynamic result2 = await DatabaseManager().getData();
     final result2 = await FirebaseFirestore.instance
@@ -38,30 +37,32 @@ class _TrangChuState extends State<TrangChu> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: 1920,
         height: 1080,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Center(
           child: Column(children: [
-            Padding(padding: EdgeInsets.only(top: 30)),
+            const Padding(padding: EdgeInsets.only(top: 30)),
             Container(
                 width: 150,
                 height: 150,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.red,
                         Colors.black,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giaodien/BangXepHang.dart';
 import 'package:giaodien/LichSuDau.dart';
-import 'NapCredit.dart';
 
 void main() {
   runApp(const ThongTin());

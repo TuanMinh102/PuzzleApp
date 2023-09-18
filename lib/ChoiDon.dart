@@ -20,7 +20,7 @@ class ChoiDon extends StatefulWidget {
 class _ChoiDonState extends State<ChoiDon> {
   List dataList = [];
   List<String> arr = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
-  @override
+
   fetchDatabaseList() async {
     // dynamic result = await DatabaseManager().getData();
     final result2 = await FirebaseFirestore.instance

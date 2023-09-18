@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +12,12 @@ import 'package:giaodien/recover_pass.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(DangNhap());
+  runApp(const DangNhap());
 }
 
 class DangNhap extends StatelessWidget {
   const DangNhap({super.key});
-
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -40,12 +42,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  LoginBloc bloc = new LoginBloc();
+  LoginBloc bloc = LoginBloc();
   bool _showPass = false;
-  TextEditingController _userController = new TextEditingController();
-  TextEditingController _passController = new TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
   List dataList = [];
-  @override
+
   fetchDatabaseList() async {
     dynamic result = await DatabaseManager().getUserData();
     if (result == null) {
@@ -57,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
@@ -68,9 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         width: 1920,
         height: 1080,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
               "images/background.jpg",
             ),
           ),
@@ -84,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 290,
                   height: 563,
                   decoration: BoxDecoration(
-                    gradient: new LinearGradient(
+                    gradient: const LinearGradient(
                         colors: [
                           Colors.white,
                           Colors.grey,
@@ -107,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 300,
                   height: 600,
                   decoration: BoxDecoration(
-                    gradient: new LinearGradient(
+                    gradient: const LinearGradient(
                         colors: [
                           Colors.white,
                           Colors.grey,
@@ -133,10 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     borderRadius: BorderRadius.circular(0),
                     color: Colors.white.withOpacity(0),
                   ),
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Sign In',
                         style: TextStyle(
                             fontSize: 25,
@@ -144,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
                         child: Text(
                           'Fill your information to sign in.',
@@ -152,18 +155,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: StreamBuilder(
                           stream: bloc.userStream,
                           builder: (context, snapshot) => TextField(
                             controller: _userController,
-                            style: TextStyle(fontSize: 18, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black),
                             decoration: InputDecoration(
                                 labelText: "Username",
                                 errorText: snapshot.hasError
                                     ? snapshot.error.toString()
                                     : null,
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: Color(0xff888888), fontSize: 15)),
                           ),
                         ),
@@ -177,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 stream: bloc.passStream,
                                 builder: (context, snapshot) => TextField(
                                   controller: _passController,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 18, color: Colors.black),
                                   obscureText: !_showPass,
                                   decoration: InputDecoration(
@@ -185,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       errorText: snapshot.hasError
                                           ? snapshot.error.toString()
                                           : null,
-                                      labelStyle: TextStyle(
+                                      labelStyle: const TextStyle(
                                           color: Color(0xff888888),
                                           fontSize: 15)),
                                 ),
@@ -194,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 onTap: show_hide,
                                 child: Text(
                                   _showPass ? "HIDE" : "SHOW",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.blue,
                                       fontWeight: FontWeight.bold),
@@ -204,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           )),
                       RichText(
                         text: TextSpan(children: [
-                          TextSpan(
+                          const TextSpan(
                             text: 'None of account? ',
                             style: TextStyle(
                               color: Colors.black,
@@ -212,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           TextSpan(
                               text: 'Sign up',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 decoration: TextDecoration.underline,
                               ),
@@ -228,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       RichText(
                         text: TextSpan(children: [
-                          TextSpan(
+                          const TextSpan(
                             text: 'Forget your password? ',
                             style: TextStyle(
                               color: Colors.black,
@@ -236,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           TextSpan(
                               text: 'Recover',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 decoration: TextDecoration.underline,
                               ),
@@ -252,26 +256,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         ]),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(55, 40, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(55, 40, 0, 0),
                         child: Row(
                           children: [
                             SizedBox(
                               width: 70,
                               height: 40,
                               child: FloatingActionButton.extended(
-                                  label: Text(
+                                  label: const Text(
                                     'Sign in',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   backgroundColor: Colors.black,
                                   onPressed: Login),
                             ),
-                            Padding(padding: EdgeInsets.all(20)),
+                            const Padding(padding: EdgeInsets.all(20)),
                             SizedBox(
                               width: 75,
                               height: 40,
                               child: FloatingActionButton.extended(
-                                label: Text(
+                                label: const Text(
                                   'Start now',
                                   style: TextStyle(color: Colors.white),
                                 ),
@@ -293,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -326,7 +330,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (flag == false) {
       showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) => const AlertDialog(
                 title: Row(
                   children: [
                     Text(

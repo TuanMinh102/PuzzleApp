@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giaodien/TrangChu.dart';
 
 // void main() {
-//   runApp(const KetThucGame());
+//   runApp( KetThucGame());
 // }
 
 class KetThucGame extends StatefulWidget {

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ListItem {
   ListItem(
       {required this.question,

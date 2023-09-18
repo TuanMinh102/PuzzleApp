@@ -292,6 +292,14 @@ class _MyHomePageState extends State<MyHomePage> {
         'ai10': '0',
       };
       FirebaseFirestore.instance.collection('highscore').add(datatosave2);
+      Map<String, String> datatosave3 = {
+        'username': _nameController.text,
+        'Streak': '0',
+        'Current_rank': 'iron',
+        'Hightest_rank': 'iron',
+        'Win': '0'
+      };
+      FirebaseFirestore.instance.collection('accounts_info').add(datatosave3);
 
       Navigator.push(
         context,

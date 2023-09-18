@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:giaodien/BangXepHang.dart';
 import 'package:giaodien/PhongDau.dart';
@@ -26,9 +25,9 @@ class _DoiKhangState extends State<DoiKhang> {
       body: Container(
         width: 1080,
         height: 1920,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Column(children: [
@@ -39,7 +38,7 @@ class _DoiKhangState extends State<DoiKhang> {
             child: Row(
               children: [
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     size: 40,
                   ),
@@ -54,8 +53,8 @@ class _DoiKhangState extends State<DoiKhang> {
                     );
                   },
                 ),
-                Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                Center(
+                const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
+                const Center(
                   child: Text(
                     'Chơi Đối Kháng',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -65,13 +64,13 @@ class _DoiKhangState extends State<DoiKhang> {
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
+          const Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
           SizedBox(
             width: 150,
             height: 35,
             child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -107,13 +106,13 @@ class _DoiKhangState extends State<DoiKhang> {
                   ),
                 )),
           ),
-          Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
+          const Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
           SizedBox(
             width: 150,
             height: 35,
             child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -130,13 +129,17 @@ class _DoiKhangState extends State<DoiKhang> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    RandomID(dataList);
+                    randomID(dataList);
                     Map<String, String> datatosave = {
                       'id': randomid.toString(),
                       'players': '1',
                       'host': widget.username,
                       'competitor': '',
-                      'start': '0'
+                      'score_host': '0',
+                      'score_competitor': '0',
+                      'start': '0',
+                      'host_playing': 'true',
+                      'competitor_playing': 'true',
                     };
                     FirebaseFirestore.instance
                         .collection('room_list')
@@ -162,13 +165,13 @@ class _DoiKhangState extends State<DoiKhang> {
                   ),
                 )),
           ),
-          Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
+          const Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
           SizedBox(
             width: 150,
             height: 35,
             child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -202,13 +205,13 @@ class _DoiKhangState extends State<DoiKhang> {
                   ),
                 )),
           ),
-          Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
+          const Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
           SizedBox(
             width: 150,
             height: 35,
             child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -247,7 +250,7 @@ class _DoiKhangState extends State<DoiKhang> {
     );
   }
 
-  void RandomID(List<dynamic> l) {
+  void randomID(List<dynamic> l) {
     var rng = Random();
     bool flag = true;
     while (true) {
@@ -260,7 +263,6 @@ class _DoiKhangState extends State<DoiKhang> {
       }
       if (flag == true) break;
     }
-    ;
     setState(() {
       randomid = rng.nextInt(1000);
     });
