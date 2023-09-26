@@ -140,6 +140,7 @@ class _DoiKhangState extends State<DoiKhang> {
                       'start': '0',
                       'host_playing': 'true',
                       'competitor_playing': 'true',
+                      'finish': 'false'
                     };
                     FirebaseFirestore.instance
                         .collection('room_list')

@@ -20,7 +20,7 @@ class _PhongDauState extends State<PhongDau> {
   void start(String documentID) {
     final room =
         FirebaseFirestore.instance.collection('room_list').doc(documentID);
-    room.update({'start': '1'});
+    room.update({'start': '1', 'finish': 'true'});
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -161,53 +161,53 @@ class _PhongDauState extends State<PhongDau> {
                     style: TextStyle(color: Colors.red),
                   ),
                   const Padding(padding: EdgeInsets.all(20)),
-                  Row(children: [
-                    const Padding(padding: EdgeInsets.only(left: 80)),
-                    Container(
-                      child: Column(children: [
-                        Image(
+                  Center(
+                    child: Row(children: [
+                      const Padding(padding: EdgeInsets.only(left: 80)),
+                      Column(children: [
+                        const Image(
                           image: AssetImage('images/crown.png'),
                           width: 30,
                           height: 30,
                         ),
-                        Image(
+                        const Image(
                           image: AssetImage('images/user.png'),
                           width: 55,
                           height: 55,
                         ),
                         Text(dataList[0]['host']),
                       ]),
-                    ),
-                    const Padding(padding: EdgeInsets.only(left: 30)),
-                    Image(
-                      image: AssetImage('images/vs.png'),
-                      width: 55,
-                      height: 55,
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 30)),
-                    Column(
-                      children: [
-                        Padding(padding: EdgeInsets.only(top: 20)),
-                        if (dataList[0]['competitor'] == '')
-                          Container(
-                            width: 55,
-                            height: 55,
-                            color: Colors.white,
-                            child: IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: () {},
+                      const Padding(padding: EdgeInsets.only(left: 30)),
+                      const Image(
+                        image: AssetImage('images/vs.png'),
+                        width: 55,
+                        height: 55,
+                      ),
+                      const Padding(padding: EdgeInsets.only(left: 30)),
+                      Column(
+                        children: [
+                          const Padding(padding: EdgeInsets.only(top: 20)),
+                          if (dataList[0]['competitor'] == '')
+                            Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                              child: IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                            )
+                          else
+                            const Image(
+                              image: AssetImage('images/user.png'),
+                              width: 55,
+                              height: 55,
                             ),
-                          )
-                        else
-                          Image(
-                            image: AssetImage('images/user.png'),
-                            width: 55,
-                            height: 55,
-                          ),
-                        Text(dataList[0]['competitor']),
-                      ],
-                    ),
-                  ]),
+                          Text(dataList[0]['competitor']),
+                        ],
+                      ),
+                    ]),
+                  ),
                   const Padding(padding: EdgeInsets.only(top: 70)),
                   if (dataList[0]['players'] == '2' &&
                       dataList[0]['host'] == widget.username)
@@ -215,12 +215,12 @@ class _PhongDauState extends State<PhongDau> {
                       onPressed: () {
                         start(docid);
                       },
-                      icon: Image(
+                      icon: const Image(
                         image: AssetImage('images/boxing-gloves.png'),
                         width: 35,
                         height: 35,
                       ),
-                      label: Text('Bắt Đầu'),
+                      label: const Text('Bắt Đầu'),
                     ),
                 ]),
               );

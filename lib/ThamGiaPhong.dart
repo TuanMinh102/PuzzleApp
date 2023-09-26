@@ -14,21 +14,21 @@ class ThamGiaPhong extends StatefulWidget {
 class _ThamGiaPhongState extends State<ThamGiaPhong> {
   List dataList = [];
   String docid = '';
-  @override
+
   void join(int index) {
     if (dataList[index]['players'] == '2') {
       showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) => const AlertDialog(
                 title: Row(
                   children: [
                     Text(
-                      'Tham gia that bai',
+                      'Tham gia thất bại',
                       style: TextStyle(color: Colors.red),
                     ),
                   ],
                 ),
-                content: Text("Phong da du nguoi"),
+                content: Text("Phòng đã đủ người"),
               ),
           barrierDismissible: true);
     } else {
@@ -70,19 +70,21 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: 1080,
         height: 1920,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Center(
@@ -103,9 +105,10 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoiKhang(
-                                  username: widget.username,
-                                )),
+                          builder: (context) => DoiKhang(
+                            username: widget.username,
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -141,12 +144,15 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
               child: Column(
                 children: [
                   Padding(padding: EdgeInsets.only(top: 20)),
-                  for (int i = 0; i < dataList.length; i++)
+                  for (int i = 0;
+                      i < dataList.length &&
+                          dataList[i]['finish'].toString() != 'true';
+                      i++)
                     Container(
                       width: 310,
                       height: 40,
                       decoration: BoxDecoration(
-                        gradient: new LinearGradient(
+                        gradient: const LinearGradient(
                             colors: [
                               Colors.white,
                               Colors.grey,
@@ -162,13 +168,13 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
                       ),
                       child: Row(
                         children: [
-                          Padding(padding: EdgeInsets.only(left: 5)),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
                           Text(
                             'Id:' + dataList[i]['id'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          Padding(padding: EdgeInsets.only(left: 5)),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
                           Container(
                             width: 1,
                             color: Colors.black,

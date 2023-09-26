@@ -17,7 +17,13 @@ class ResultPvP extends StatefulWidget {
 class _ResultPvPState extends State<ResultPvP> {
   List dataList = [];
   String docid = '';
-
+  int host = 0;
+  int competitor = 0;
+  int max = 0;
+  int min = 0;
+  String win = '';
+  String lost = '';
+  bool flag = true;
   getdocumentid() async {
     final roomref = FirebaseFirestore.instance
         .collection('room_list')
@@ -38,15 +44,17 @@ class _ResultPvPState extends State<ResultPvP> {
         .where('id', isEqualTo: widget.idRoom)
         .get();
     if (result2 == null) {
+      flag = false;
       print("unable");
     } else {
       setState(() {
         dataList = result2.docs.map((e) => e.data()).toList();
+        host = getInitial(dataList[0]['score_host']);
+        competitor = getInitial(dataList[0]['score_competitor']);
       });
     }
   }
 
-  // }
   @override
   void initState() {
     super.initState();
@@ -70,7 +78,7 @@ class _ResultPvPState extends State<ResultPvP> {
         child: Center(
           child: InkWell(
             onTap: () => {
-              delRoom(),
+              // delRoom(),
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -84,54 +92,56 @@ class _ResultPvPState extends State<ResultPvP> {
               width: 350,
               height: 500,
               color: Colors.grey.withOpacity(0.8),
-              child: Column(
-                children: [
-                  if (winner() == true)
+              child: Center(
+                child: Column(
+                  children: [
+                    if (winner() == true)
+                      const Text(
+                        'Chiến Thắng',
+                        style: TextStyle(color: Colors.yellow, fontSize: 50),
+                      )
+                    else
+                      const Text('Thất Bại',
+                          style: TextStyle(color: Colors.red, fontSize: 50)),
+                    const Padding(padding: EdgeInsets.only(left: 20)),
+                    if (winner() == true)
+                      const Row(children: [
+                        Image(
+                          image: AssetImage('images/winner.png'),
+                          width: 200,
+                          height: 200,
+                        ),
+                        Image(
+                          image: AssetImage('images/arrow-up.png'),
+                          width: 50,
+                          height: 50,
+                        ),
+                      ])
+                    else
+                      const Row(children: [
+                        Image(
+                          image: AssetImage('images/trophy.png'),
+                          width: 200,
+                          height: 200,
+                        ),
+                        Image(
+                          image: AssetImage('images/down.png'),
+                          width: 50,
+                          height: 50,
+                        ),
+                      ]),
+                    const Padding(padding: EdgeInsets.only(top: 50)),
+                    scoreShow(),
+                    const Padding(padding: EdgeInsets.only(top: 70)),
                     const Text(
-                      'Chiến Thắng',
-                      style: TextStyle(color: Colors.yellow, fontSize: 50),
-                    )
-                  else
-                    const Text('Thất Bại',
-                        style: TextStyle(color: Colors.red, fontSize: 50)),
-                  const Padding(padding: EdgeInsets.only(left: 20)),
-                  if (winner() == true)
-                    const Row(children: [
-                      Image(
-                        image: AssetImage('images/winner.png'),
-                        width: 200,
-                        height: 200,
-                      ),
-                      Image(
-                        image: AssetImage('images/arrow-up.png'),
-                        width: 50,
-                        height: 50,
-                      ),
-                    ])
-                  else
-                    const Row(children: [
-                      Image(
-                        image: AssetImage('images/trophy.png'),
-                        width: 200,
-                        height: 200,
-                      ),
-                      Image(
-                        image: AssetImage('images/down.png'),
-                        width: 50,
-                        height: 50,
-                      ),
-                    ]),
-                  const Padding(padding: EdgeInsets.only(top: 50)),
-                  scoreShow(),
-                  const Padding(padding: EdgeInsets.only(top: 70)),
-                  const Text(
-                    'Ấn màn hình để tiếp tục',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10),
-                  ),
-                ],
+                      'Ấn màn hình để tiếp tục',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -141,8 +151,6 @@ class _ResultPvPState extends State<ResultPvP> {
   }
 
   bool winner() {
-    int host = getInitial(dataList[0]['score_host']);
-    int competitor = getInitial(dataList[0]['score_competitor']);
     if (host > competitor && dataList[0]['host'] == widget.username) {
       return true;
     } else if (host < competitor && dataList[0]['host'] != widget.username) {
@@ -153,12 +161,6 @@ class _ResultPvPState extends State<ResultPvP> {
   }
 
   Widget scoreShow() {
-    int host = getInitial(dataList[0]['score_host']);
-    int competitor = getInitial(dataList[0]['score_competitor']);
-    int max = 0;
-    int min = 0;
-    String win = '';
-    String lost = '';
     if (host > competitor) {
       max = host;
       win = dataList[0]['host'];
@@ -170,6 +172,7 @@ class _ResultPvPState extends State<ResultPvP> {
       min = host;
       lost = dataList[0]['host'];
     }
+
     return Column(
       children: [
         RichText(

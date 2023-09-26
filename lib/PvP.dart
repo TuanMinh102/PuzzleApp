@@ -40,7 +40,7 @@ class _PvPState extends State<PvP> {
 
   List dataList2 = [];
   String docid = '';
-  static int maxSeconds = 60;
+  static int maxSeconds = 120;
   int seconds = maxSeconds;
   Timer? timer;
   int remainingTime = 0;
@@ -76,7 +76,9 @@ class _PvPState extends State<PvP> {
           seconds--;
         });
       } else {
-        timeup = true;
+        setState(() {
+          timeup = true;
+        });
       }
     });
   }
@@ -99,7 +101,7 @@ class _PvPState extends State<PvP> {
     }
   }
 
-  void check(int value) async {
+  void check(int value) {
     if (value == ListItem.lst[randomid].resultID) {
       showDialog(
           context: context,
@@ -120,7 +122,9 @@ class _PvPState extends State<PvP> {
                 content: Text("Bạn được thêm 5 điểm"),
               ),
           barrierDismissible: true);
-      score += 5;
+      setState(() {
+        score += 5;
+      });
     } else {
       showDialog(
           context: context,
@@ -155,10 +159,10 @@ class _PvPState extends State<PvP> {
   void upDate(int time) {
     // timer?.cancel();
     final room = FirebaseFirestore.instance.collection('room_list').doc(docid);
-    if (dataList2[0]['host'] == widget.username) {
+    if (dataList2[0]['host'].toString() == widget.username) {
       room.update(
           {'score_host': (score + time).toString(), 'host_playing': 'false'});
-    } else {
+    } else if (dataList2[0]['competitor'].toString() == widget.username) {
       room.update({
         'score_competitor': (score + time).toString(),
         'competitor_playing': 'false'
@@ -177,19 +181,19 @@ class _PvPState extends State<PvP> {
               tmp = 1;
               upDate(seconds);
               return loading();
-            } else if (dataList2[0]['host_playing'] == 'false' &&
-                dataList2[0]['competitor_playing'] == 'false') {
-              return ResultPvP(
-                  username: widget.username, idRoom: widget.idRoom);
             } else if (timeup == true && tmp != 1) {
               tmp = 1;
               upDate(seconds);
               return ResultPvP(
                   username: widget.username, idRoom: widget.idRoom);
-            } else if ((dataList2[0]['host_playing'] == 'false' &&
-                    widget.username == dataList2[0]['host']) ||
-                (dataList2[0]['competitor_playing'] == 'false' &&
-                    widget.username != dataList2[0]['host'])) {
+            } else if (dataList2[0]['host_playing'].toString() == 'false' &&
+                dataList2[0]['competitor_playing'].toString() == 'false') {
+              return ResultPvP(
+                  username: widget.username, idRoom: widget.idRoom);
+            } else if ((dataList2[0]['host_playing'].toString() == 'false' &&
+                    widget.username == dataList2[0]['host'].toString()) ||
+                (dataList2[0]['competitor_playing'].toString() == 'false' &&
+                    widget.username != dataList2[0]['host'].toString())) {
               return loading();
             } else if (number < 11) {
               return Container(
@@ -257,11 +261,18 @@ class _PvPState extends State<PvP> {
                               'x2',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            const Padding(padding: EdgeInsets.only(left: 10)),
-                            Text(
-                              '$seconds',
-                              style: TextStyle(fontSize: 20),
-                            )
+                            Row(children: [
+                              const Padding(padding: EdgeInsets.only(left: 70)),
+                              const Image(
+                                image: AssetImage('images/hourglass.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                              Text(
+                                '$seconds',
+                                style: TextStyle(fontSize: 20),
+                              )
+                            ]),
                           ],
                         ),
                       ],
