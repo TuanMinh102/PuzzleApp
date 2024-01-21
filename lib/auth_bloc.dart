@@ -13,7 +13,7 @@ class AuthBloc {
 
   bool isValid(
       String name, String email, String pass, String confirm, List<dynamic> l) {
-    if (name == null || name.length == 0) {
+    if (name.isEmpty) {
       _nameController.sink.addError("Nhập tên");
       return false;
     } else {
@@ -23,13 +23,13 @@ class AuthBloc {
       }
       for (int i = 0; i < l.length; i++) {
         if (name == l[i]['username']) {
-          _nameController.sink.addError("Ten dang nhap da ton tai");
+          _nameController.sink.addError("Tên đăng nhập đã tồn tại");
           return false;
         }
       }
     }
     _nameController.sink.add("");
-    if (email == null || email.length == 0) {
+    if (email.isEmpty) {
       _emailController.sink.addError("Nhập mail");
       return false;
     } else {
@@ -39,7 +39,7 @@ class AuthBloc {
       }
     }
     _emailController.sink.add("");
-    if (pass == null || pass.length == 0) {
+    if (pass.isEmpty) {
       _passController.sink.addError("Nhập mật khẩu");
       return false;
     } else {
@@ -49,7 +49,7 @@ class AuthBloc {
       }
     }
     _passController.sink.add("");
-    if (confirm == null || confirm.length == 0) {
+    if (confirm.isEmpty) {
       _confirmController.sink.addError("Nhập mật khẩu xác nhận");
       return false;
     } else {

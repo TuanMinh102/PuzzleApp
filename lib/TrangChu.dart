@@ -101,6 +101,7 @@ class _TrangChuState extends State<TrangChu> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -143,6 +144,7 @@ class _TrangChuState extends State<TrangChu> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -185,6 +187,7 @@ class _TrangChuState extends State<TrangChu> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -262,9 +265,12 @@ class _TrangChuState extends State<TrangChu> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const DangNhap()),
+                      MaterialPageRoute(
+                        builder: (context) => const DangNhap(),
+                      ),
                     );
                   },
                   child: Text(
@@ -372,6 +378,7 @@ class _TrangChuState extends State<TrangChu> {
                           icon: Icon(
                             Icons.share,
                             color: Colors.black,
+                            size: 12,
                           ),
                           onPressed: () {
                             // Navigator.push(

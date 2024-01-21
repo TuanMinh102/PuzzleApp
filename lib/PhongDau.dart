@@ -21,6 +21,7 @@ class _PhongDauState extends State<PhongDau> {
     final room =
         FirebaseFirestore.instance.collection('room_list').doc(documentID);
     room.update({'start': '1', 'finish': 'true'});
+    Navigator.pop(context);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -134,6 +135,7 @@ class _PhongDauState extends State<PhongDau> {
                           color: Colors.black,
                           onPressed: () {
                             quitRoom(docid);
+                            Navigator.pop(context);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

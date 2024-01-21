@@ -6,18 +6,27 @@ class LoginBloc {
   Stream get userStream => _userController.stream;
   Stream get passStream => _passController.stream;
 
-  bool isValidInfo(String username, String pass) {
-    if (username == null || username.length < 6) {
+  bool isValidInput(String username, String pass) {
+    if (username.isEmpty || username.length < 6) {
       _userController.sink.addError("Tài khoản không hợp lệ");
       return false;
     }
-    if (pass == null || pass.length > 6) {
+    _userController.sink.add("ok");
+    if (pass.isEmpty || pass.length > 6) {
       _passController.sink.addError("Mật khẩu tối đa 6 ký tự");
       return false;
     }
-    _userController.sink.add("ok");
     _passController.sink.add("ok");
     return true;
+  }
+
+  bool isValidAccount(String username, String pass, List<dynamic> l) {
+    for (int i = 0; i < l.length; i++) {
+      if (l[i]['username'] == username && l[i]['password'] == pass) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void dispose() {

@@ -46,6 +46,7 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
       final room =
           FirebaseFirestore.instance.collection('room_list').doc(docid);
       room.update({'competitor': widget.username, 'players': '2'});
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -102,6 +103,7 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
                     ),
                     color: Colors.black,
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

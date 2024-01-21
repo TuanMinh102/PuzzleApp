@@ -44,6 +44,7 @@ class _DoiKhangState extends State<DoiKhang> {
                   ),
                   color: Colors.black,
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -66,7 +67,7 @@ class _DoiKhangState extends State<DoiKhang> {
           ),
           const Padding(padding: EdgeInsets.fromLTRB(10, 70, 10, 10)),
           SizedBox(
-            width: 150,
+            width: 160,
             height: 35,
             child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -87,6 +88,7 @@ class _DoiKhangState extends State<DoiKhang> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -145,7 +147,8 @@ class _DoiKhangState extends State<DoiKhang> {
                     FirebaseFirestore.instance
                         .collection('room_list')
                         .add(datatosave);
-
+                    //
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -189,6 +192,7 @@ class _DoiKhangState extends State<DoiKhang> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -229,6 +233,7 @@ class _DoiKhangState extends State<DoiKhang> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

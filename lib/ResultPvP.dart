@@ -77,8 +77,9 @@ class _ResultPvPState extends State<ResultPvP> {
         ),
         child: Center(
           child: InkWell(
-            onTap: () => {
+            onTap: () {
               // delRoom(),
+              Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -86,7 +87,7 @@ class _ResultPvPState extends State<ResultPvP> {
                     username: widget.username,
                   ),
                 ),
-              ),
+              );
             },
             child: Container(
               width: 350,

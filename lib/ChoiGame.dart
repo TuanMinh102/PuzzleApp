@@ -140,7 +140,7 @@ class _ChoiGameState extends State<ChoiGame> {
               FirebaseFirestore.instance.collection('highscore').doc(docid);
           highscore.update({'ai$lv': score.toString()});
         }
-
+        Navigator.pop(context);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -184,6 +184,7 @@ class _ChoiGameState extends State<ChoiGame> {
                     ),
                     color: Colors.black,
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

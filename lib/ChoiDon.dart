@@ -69,6 +69,7 @@ class _ChoiDonState extends State<ChoiDon> {
                     ),
                     color: Colors.black,
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -101,6 +102,7 @@ class _ChoiDonState extends State<ChoiDon> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: Colors.white),
                         onPressed: () {
+                          Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -149,6 +151,7 @@ class _ChoiDonState extends State<ChoiDon> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: Colors.white),
                         onPressed: () {
+                          Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

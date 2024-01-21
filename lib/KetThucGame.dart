@@ -35,6 +35,7 @@ class _KetThucGameState extends State<KetThucGame> {
         child: Center(
           child: new GestureDetector(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
