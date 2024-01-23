@@ -14,7 +14,6 @@ class PhongDau extends StatefulWidget {
 }
 
 class _PhongDauState extends State<PhongDau> {
-  List dataList = [];
   String docid = '';
 
   void start(String documentID) {
@@ -30,36 +29,17 @@ class _PhongDauState extends State<PhongDau> {
     );
   }
 
-  void quitRoom(String documentID) {
+  void quitRoom(String documentID, var list) {
     final room =
         FirebaseFirestore.instance.collection('room_list').doc(documentID);
-    if (dataList[0]['host'] == widget.username &&
-        dataList[0]['players'] == '1') {
+    if (list?['host'] == widget.username && list?['players'] == '1') {
       room.delete();
-    } else if (dataList[0]['host'] == widget.username &&
-        dataList[0]['players'] == '2') {
-      room.update({
-        'host': dataList[0]['competitor'],
-        'players': '1',
-        'competitor': ''
-      });
-    } else if (dataList[0]['competitor'] != dataList[0]['host'] &&
-        dataList[0]['competitor'] != '') {
+    } else if (list?['host'] == widget.username && list?['players'] == '2') {
+      room.update(
+          {'host': list?['competitor'], 'players': '1', 'competitor': ''});
+    } else if (list?['competitor'] != list?['host'] &&
+        list?['competitor'] != '') {
       room.update({'competitor': '', 'players': '1'});
-    }
-  }
-
-  Stream<String> reload() async* {
-    while (true) {
-      final result2 = await FirebaseFirestore.instance
-          .collection('room_list')
-          .where('id', isEqualTo: widget.idRoom)
-          .get();
-      setState(() {
-        dataList = result2.docs.map((e) => e.data()).toList();
-      });
-      yield dataList[0]['competitor'].toString();
-      await Future.delayed(Duration(seconds: 1));
     }
   }
 
@@ -77,36 +57,23 @@ class _PhongDauState extends State<PhongDau> {
     });
   }
 
-  fetchDatabaseList() async {
-    final result2 = await FirebaseFirestore.instance
-        .collection('room_list')
-        .where('id', isEqualTo: widget.idRoom)
-        .get();
-    if (result2 == null) {
-      print("unable");
-    } else {
-      setState(() {
-        dataList = result2.docs.map((e) => e.data()).toList();
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    fetchDatabaseList();
-    reload();
     getdocumentid();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<String>(
-          initialData: dataList[0]['competitor'],
-          stream: reload(),
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('room_list')
+              .doc(docid)
+              .snapshots(),
           builder: (context, snapshot) {
-            if (dataList[0]['start'] == '1') {
+            var yourData = snapshot.data!.data() as Map<String, dynamic>?;
+            if (yourData?['start'] == '1') {
               return PvP(
                 username: widget.username,
                 idRoom: widget.idRoom,
@@ -134,7 +101,7 @@ class _PhongDauState extends State<PhongDau> {
                           ),
                           color: Colors.black,
                           onPressed: () {
-                            quitRoom(docid);
+                            quitRoom(docid, yourData);
                             Navigator.pop(context);
                             Navigator.push(
                               context,
@@ -177,7 +144,7 @@ class _PhongDauState extends State<PhongDau> {
                           width: 55,
                           height: 55,
                         ),
-                        Text(dataList[0]['host']),
+                        Text(yourData?['host']),
                       ]),
                       const Padding(padding: EdgeInsets.only(left: 30)),
                       const Image(
@@ -189,7 +156,7 @@ class _PhongDauState extends State<PhongDau> {
                       Column(
                         children: [
                           const Padding(padding: EdgeInsets.only(top: 20)),
-                          if (dataList[0]['competitor'] == '')
+                          if (yourData?['competitor'] == '')
                             Container(
                               width: 55,
                               height: 55,
@@ -205,24 +172,29 @@ class _PhongDauState extends State<PhongDau> {
                               width: 55,
                               height: 55,
                             ),
-                          Text(dataList[0]['competitor']),
+                          Text(yourData?['competitor']),
                         ],
                       ),
                     ]),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 70)),
-                  if (dataList[0]['players'] == '2' &&
-                      dataList[0]['host'] == widget.username)
+                  if (yourData?['players'] == '2' &&
+                      yourData?['host'] == widget.username)
                     ElevatedButton.icon(
                       onPressed: () {
                         start(docid);
                       },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
                       icon: const Image(
                         image: AssetImage('images/boxing-gloves.png'),
                         width: 35,
                         height: 35,
                       ),
-                      label: const Text('Bắt Đầu'),
+                      label: const Text('Bắt Đầu',
+                          style: TextStyle(color: Colors.white)),
                     ),
                 ]),
               );

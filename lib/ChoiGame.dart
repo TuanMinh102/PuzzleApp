@@ -4,10 +4,6 @@ import 'package:giaodien/ChoiDon.dart';
 import 'package:giaodien/KetThucGame.dart';
 import 'package:giaodien/list-question.dart';
 
-// void main() {
-//   runApp(const ChoiGame());
-// }
-
 class ChoiGame extends StatefulWidget {
   final int level;
   final String username;
@@ -31,15 +27,15 @@ class _ChoiGameState extends State<ChoiGame> {
   int index = 0;
   int number = 1;
   int score = 0;
-  int button1 = 1;
-  int button2 = 2;
-  int button3 = 3;
-  int button4 = 4;
+  int A = 1;
+  int B = 2;
+  int C = 3;
+  int D = 4;
   List dataList = [];
   String docid = '';
 
   getdocumentid() async {
-    final userref = FirebaseFirestore.instance
+    final userref = await FirebaseFirestore.instance
         .collection('highscore')
         .where('username', isEqualTo: widget.username)
         .get()
@@ -53,7 +49,6 @@ class _ChoiGameState extends State<ChoiGame> {
   }
 
   fetchDatabaseList() async {
-    // dynamic result = await DatabaseManager().getData();
     final result2 = await FirebaseFirestore.instance
         .collection('highscore')
         .where('username', isEqualTo: widget.username)
@@ -63,7 +58,6 @@ class _ChoiGameState extends State<ChoiGame> {
     } else {
       setState(() {
         dataList = result2.docs.map((e) => e.data()).toList();
-        Level();
       });
     }
   }
@@ -73,85 +67,7 @@ class _ChoiGameState extends State<ChoiGame> {
     super.initState();
     fetchDatabaseList();
     getdocumentid();
-  }
-
-  void check(int value) async {
-    if (value == ListItem.lst[index].resultID) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Row(
-                  children: [
-                    Text(
-                      'Chính Xác',
-                      style: TextStyle(color: Color.fromARGB(255, 0, 243, 150)),
-                    ),
-                    Image(
-                      image: AssetImage('images/check-mark.png'),
-                      width: 25,
-                      height: 25,
-                    ),
-                  ],
-                ),
-                content: Text("Bạn được thêm 5 điểm"),
-              ),
-          barrierDismissible: true);
-      setState(() {
-        score += 5;
-      });
-    } else {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Row(
-                  children: [
-                    Text(
-                      'Sai Rồi',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    Image(
-                      image: AssetImage('images/cross.png'),
-                      width: 20,
-                      height: 20,
-                    ),
-                  ],
-                ),
-                content: Text("Rất tiếc bạn đã trả lời sai :("),
-              ),
-          barrierDismissible: true);
-    }
-    await delay(2000);
-    setState(() {
-      index++;
-      number++;
-      if (index == 10 ||
-          index == 20 ||
-          index == 30 ||
-          index == 40 ||
-          index == 50 ||
-          index == 60 ||
-          index == 70 ||
-          index == 80 ||
-          index == 90 ||
-          index == 100) {
-        int lv = widget.level;
-        if (checkHighScore(dataList[0]['ai$lv'].toString(), score) == true) {
-          final highscore =
-              FirebaseFirestore.instance.collection('highscore').doc(docid);
-          highscore.update({'ai$lv': score.toString()});
-        }
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => KetThucGame(
-                    score: score,
-                    level: widget.level,
-                    username: widget.username,
-                  )),
-        );
-      }
-    });
+    Level();
   }
 
   Future<void> delay(int millis) async {
@@ -178,7 +94,7 @@ class _ChoiGameState extends State<ChoiGame> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.keyboard_arrow_left,
                       size: 40,
                     ),
@@ -194,12 +110,12 @@ class _ChoiGameState extends State<ChoiGame> {
                       );
                     },
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
                   Center(
                     child: Text(
                       'Level' + widget.level.toString(),
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -208,46 +124,45 @@ class _ChoiGameState extends State<ChoiGame> {
             ),
             Row(
               children: [
-                Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
+                const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
                 Text(
                   'Score:$score',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      Padding(padding: EdgeInsets.only(left: 110)),
-                      Image(
-                        image: AssetImage('images/light-bulb.png'),
-                        width: 30,
-                        height: 30,
-                      ),
-                      Text(
-                        'x2',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                const Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 110)),
+                    Image(
+                      image: AssetImage('images/light-bulb.png'),
+                      width: 30,
+                      height: 30,
+                    ),
+                    Text(
+                      'x2',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ],
             ),
             Container(
               width: 300,
               height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('images/table.png'),
-              )),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/table.png'),
+                ),
+              ),
               child: Column(
                 children: [
-                  Padding(padding: EdgeInsets.only(top: 70)),
+                  const Padding(padding: EdgeInsets.only(top: 70)),
                   Text('Số câu $number/10',
-                      style: TextStyle(color: Colors.white)),
-                  Padding(padding: EdgeInsets.only(top: 40)),
+                      style: const TextStyle(color: Colors.white)),
+                  const Padding(padding: EdgeInsets.only(top: 20)),
                   Text(ListItem.lst[index].question.toString(),
-                      style: TextStyle(color: Colors.white)),
-                  Padding(
-                    padding: EdgeInsets.only(top: 60, right: 260),
+                      style: const TextStyle(color: Colors.white)),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 70, right: 260),
                     child: Image(
                       image: AssetImage('images/koala.png'),
                       width: 45,
@@ -261,116 +176,8 @@ class _ChoiGameState extends State<ChoiGame> {
               width: 200,
               height: 50,
               child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: new LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Colors.grey,
-                        ],
-                        stops: [
-                          0.0,
-                          1.0
-                        ],
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        tileMode: TileMode.repeated),
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      check(button1);
-                    },
-                    child: Text(
-                      ListItem.lst[index].answer1.toString(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      onSurface: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                  )),
-            ),
-            Padding(padding: EdgeInsets.only(top: 12)),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: new LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Colors.grey,
-                        ],
-                        stops: [
-                          0.0,
-                          1.0
-                        ],
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        tileMode: TileMode.repeated),
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      check(button2);
-                    },
-                    child: Text(
-                      ListItem.lst[index].answer2.toString(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      onSurface: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                  )),
-            ),
-            Padding(padding: EdgeInsets.only(top: 12)),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: new LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Colors.grey,
-                        ],
-                        stops: [
-                          0.0,
-                          1.0
-                        ],
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        tileMode: TileMode.repeated),
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      check(button3);
-                    },
-                    child: Text(
-                      ListItem.lst[index].answer3.toString(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      onSurface: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                  )),
-            ),
-            Padding(padding: EdgeInsets.only(top: 12)),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -387,7 +194,116 @@ class _ChoiGameState extends State<ChoiGame> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    check(button4);
+                    check(A);
+                  },
+                  child: Text(
+                    ListItem.lst[index].answer1.toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    onSurface: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 12)),
+            SizedBox(
+              width: 200,
+              height: 50,
+              child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        colors: [
+                          Colors.white,
+                          Colors.grey,
+                        ],
+                        stops: [
+                          0.0,
+                          1.0
+                        ],
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter,
+                        tileMode: TileMode.repeated),
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      check(B);
+                    },
+                    child: Text(
+                      ListItem.lst[index].answer2.toString(),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.transparent,
+                      onSurface: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                    ),
+                  )),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 12)),
+            SizedBox(
+              width: 200,
+              height: 50,
+              child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        colors: [
+                          Colors.white,
+                          Colors.grey,
+                        ],
+                        stops: [
+                          0.0,
+                          1.0
+                        ],
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter,
+                        tileMode: TileMode.repeated),
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      check(C);
+                    },
+                    child: Text(
+                      ListItem.lst[index].answer3.toString(),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.transparent,
+                      onSurface: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                    ),
+                  )),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 12)),
+            SizedBox(
+              width: 200,
+              height: 50,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [
+                        Colors.white,
+                        Colors.grey,
+                      ],
+                      stops: [
+                        0.0,
+                        1.0
+                      ],
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      tileMode: TileMode.repeated),
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    check(D);
                   },
                   child: Text(
                     ListItem.lst[index].answer4.toString(),
@@ -442,5 +358,69 @@ class _ChoiGameState extends State<ChoiGame> {
         index = 90;
       }
     });
+  }
+
+//kiem tra dap an
+  void check(int value) async {
+    if (value == ListItem.lst[index].resultID) {
+      dialog('Chính xác', Color.fromARGB(255, 0, 243, 150),
+          'images/check-mark.png', 'Bạn được thêm 5 điểm');
+      setState(() {
+        score += 5;
+      });
+    } else {
+      dialog('Sai rồi', Colors.red, 'images/cross.png',
+          'Rất tiếc bạn đã trả lời sai :(');
+    }
+    await delay(1500);
+
+    setState(() {
+      index++;
+      if (index < (widget.level * 10)) {
+        number++;
+      }
+      if (index % 10 == 0) {
+        int lv = widget.level;
+        if (checkHighScore(dataList[0]['ai$lv'].toString(), score) == true) {
+          final highscore =
+              FirebaseFirestore.instance.collection('highscore').doc(docid);
+          highscore.update({'ai$lv': score.toString()});
+        }
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => KetThucGame(
+              score: score,
+              level: widget.level,
+              username: widget.username,
+            ),
+          ),
+        );
+      }
+    });
+  }
+
+//thong bao dap an
+  void dialog(String thongbao, Color colors, String img, String noidung) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Row(
+                children: [
+                  Text(
+                    thongbao,
+                    style: TextStyle(color: colors),
+                  ),
+                  Image(
+                    image: AssetImage(img),
+                    width: 25,
+                    height: 25,
+                  ),
+                ],
+              ),
+              content: Text(noidung),
+            ),
+        barrierDismissible: true);
   }
 }
