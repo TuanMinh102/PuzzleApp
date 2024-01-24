@@ -42,7 +42,7 @@ class _PvPState extends State<PvP> {
   static int maxSeconds = 120;
   int seconds = maxSeconds;
   Timer? timer;
-  bool updated = false;
+  int updated = 0;
 
   getdocumentid() async {
     final roomref = FirebaseFirestore.instance
@@ -104,20 +104,14 @@ class _PvPState extends State<PvP> {
   }
 
   void upDate(int time, var yourdata, int score) {
-    if (updated == false) {
-      final room =
-          FirebaseFirestore.instance.collection('room_list').doc(docid);
-      if (yourdata?['host'] == widget.username) {
-        room.update(
-            {'score_host': (score + time).toString(), 'host_playing': 'false'});
-      } else if (yourdata?['competitor'] == widget.username) {
-        room.update({
-          'score_competitor': (score + time).toString(),
-          'competitor_playing': 'false'
-        });
-      }
-      setState(() {
-        updated = true;
+    final room = FirebaseFirestore.instance.collection('room_list').doc(docid);
+    if (yourdata?['host'] == widget.username) {
+      room.update(
+          {'score_host': (score + time).toString(), 'host_playing': 'false'});
+    } else if (yourdata?['competitor'] == widget.username) {
+      room.update({
+        'score_competitor': (score + time).toString(),
+        'competitor_playing': 'false'
       });
     }
   }
@@ -132,21 +126,23 @@ class _PvPState extends State<PvP> {
               .snapshots(),
           builder: (context, snapshot) {
             var yourData = snapshot.data!.data() as Map<String, dynamic>?;
-            if (number == 11 && seconds > 0) {
+            if (number == 11 && seconds > 0 && updated != 1) {
+              updated = 1;
               upDate(seconds, yourData, score);
               return loading();
-            } else if (seconds == 0) {
+            } else if (seconds == 0 && updated != 1) {
+              updated = 1;
               upDate(seconds, yourData, score);
               return ResultPvP(
                   username: widget.username, idRoom: widget.idRoom);
-            } else if (yourData?['host_playing'].toString() == 'false' &&
-                yourData?['competitor_playing'].toString() == 'false') {
+            } else if (yourData?['host_playing'] == 'false' &&
+                yourData?['competitor_playing'] == 'false') {
               return ResultPvP(
                   username: widget.username, idRoom: widget.idRoom);
-            } else if ((yourData?['host_playing'].toString() == 'false' &&
-                    widget.username == yourData?['host'].toString()) ||
-                (yourData?['competitor_playing'].toString() == 'false' &&
-                    widget.username != yourData?['host'].toString())) {
+            } else if ((yourData?['host_playing'] == 'false' &&
+                    widget.username == yourData?['host']) ||
+                (yourData?['competitor_playing'] == 'false' &&
+                    widget.username != yourData?['host'])) {
               return loading();
             } else if (number < 11) {
               return Container(
