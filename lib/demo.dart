@@ -1,53 +1,63 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const demo());
 }
 
-class MyApp extends StatelessWidget {
+class demo extends StatelessWidget {
+  const demo({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  Timer? timer;
+  int seconds = 5;
+  void countDown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (seconds > 0) {
+        setState(() {
+          seconds--;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    countDown();
+  }
+
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Firestore Example'),
-      ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('room_list')
-            .doc('853')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-
-          if (!snapshot.hasData || snapshot.data == null) {
-            return Text('No data available');
-          }
-
-          var yourData = snapshot.data!.data() as Map<String,
-              dynamic>?; // Sử dụng kiểu dữ liệu cụ thể của dữ liệu trong document
-          var yourFieldValue = yourData?['your_field'];
-
-          return Center(
-            child: Text('Data from Firestore: ${yourFieldValue}'),
-          );
-        },
-      ),
-    );
+    if (seconds == 0)
+      return Scaffold(
+          body: Center(
+        child: Text('time up'),
+      ));
+    else
+      return Scaffold(
+        body: Center(
+          child: Text(seconds.toString()),
+        ),
+      );
   }
 }

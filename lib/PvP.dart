@@ -33,19 +33,16 @@ class _PvPState extends State<PvP> {
   int randomid = Random().nextInt(100);
   int number = 1;
   int score = 0;
-  int button1 = 1;
-  int button2 = 2;
-  int button3 = 3;
-  int button4 = 4;
+  int dapAnA = 1;
+  int dapAnB = 2;
+  int dapAnC = 3;
+  int dapAnD = 4;
 
-  List dataList2 = [];
   String docid = '';
   static int maxSeconds = 120;
   int seconds = maxSeconds;
   Timer? timer;
-  int remainingTime = 0;
-  int tmp = 0;
-  bool timeup = false;
+  bool updated = false;
 
   getdocumentid() async {
     final roomref = FirebaseFirestore.instance
@@ -64,12 +61,11 @@ class _PvPState extends State<PvP> {
   @override
   void initState() {
     super.initState();
-    startTimer();
     getdocumentid();
     countDown();
   }
 
-  void startTimer() {
+  void countDown() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds > 0) {
         setState(() {
@@ -77,95 +73,51 @@ class _PvPState extends State<PvP> {
         });
       } else {
         setState(() {
-          timeup = true;
+          timer.cancel();
         });
       }
     });
   }
 
-  Stream<int> countDown() async* {
-    while (true) {
-      final result2 = await FirebaseFirestore.instance
-          .collection('room_list')
-          .where('id', isEqualTo: widget.idRoom)
-          .get();
-      if (result2 == null) {
-        print("unable");
-      } else {
-        setState(() {
-          dataList2 = result2.docs.map((e) => e.data()).toList();
-        });
-      }
-      yield seconds;
-      await Future.delayed(const Duration(seconds: 1));
-    }
-  }
-
-  void check(int value) {
+  void check(int value) async {
     if (value == ListItem.lst[randomid].resultID) {
-      showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-                title: Row(
-                  children: [
-                    Text(
-                      'Chính Xác',
-                      style: TextStyle(color: Color.fromARGB(255, 0, 243, 150)),
-                    ),
-                    Image(
-                      image: AssetImage('images/check-mark.png'),
-                      width: 25,
-                      height: 25,
-                    ),
-                  ],
-                ),
-                content: Text("Bạn được thêm 5 điểm"),
-              ),
-          barrierDismissible: true);
+      dialog('Chính xác', Color.fromARGB(255, 0, 243, 150),
+          'images/check-mark.png', 'Bạn được thêm 5 điểm');
       setState(() {
         score += 5;
       });
     } else {
-      showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-                title: Row(
-                  children: [
-                    Text(
-                      'Sai Rồi',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    Image(
-                      image: AssetImage('images/cross.png'),
-                      width: 20,
-                      height: 20,
-                    ),
-                  ],
-                ),
-                content: Text("Rất tiếc bạn đã trả lời sai :("),
-              ),
-          barrierDismissible: true);
+      dialog('Sai rồi', Colors.red, 'images/cross.png',
+          'Rất tiếc bạn đã trả lời sai :(');
     }
-    randomID();
-    number++;
 
-    //await delay(1000);
+    randomID();
+    setState(() {
+      number++;
+    });
+
+    //await delay(1500);
   }
 
   Future<void> delay(int millis) async {
     await Future.delayed(Duration(milliseconds: millis));
   }
 
-  void upDate(int time) {
-    // timer?.cancel();
-    final room = FirebaseFirestore.instance.collection('room_list').doc(docid);
-    if (dataList2[0]['host'].toString() == widget.username) {
-      room.update(
-          {'score_host': (score + time).toString(), 'host_playing': 'false'});
-    } else if (dataList2[0]['competitor'].toString() == widget.username) {
-      room.update({
-        'score_competitor': (score + time).toString(),
-        'competitor_playing': 'false'
+  void upDate(int time, var yourdata, int score) {
+    if (updated == false) {
+      final room =
+          FirebaseFirestore.instance.collection('room_list').doc(docid);
+      if (yourdata?['host'] == widget.username) {
+        room.update(
+            {'score_host': (score + time).toString(), 'host_playing': 'false'});
+      } else if (yourdata?['competitor'] == widget.username) {
+        room.update({
+          'score_competitor': (score + time).toString(),
+          'competitor_playing': 'false'
+        });
+      }
+      setState(() {
+        updated = true;
       });
     }
   }
@@ -173,27 +125,28 @@ class _PvPState extends State<PvP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<int>(
-          initialData: seconds,
-          stream: countDown(),
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('room_list')
+              .doc(docid)
+              .snapshots(),
           builder: (context, snapshot) {
-            if (number == 11 && seconds > 0 && tmp != 1) {
-              tmp = 1;
-              upDate(seconds);
+            var yourData = snapshot.data!.data() as Map<String, dynamic>?;
+            if (number == 11 && seconds > 0) {
+              upDate(seconds, yourData, score);
               return loading();
-            } else if (timeup == true && tmp != 1) {
-              tmp = 1;
-              upDate(seconds);
+            } else if (seconds == 0) {
+              upDate(seconds, yourData, score);
               return ResultPvP(
                   username: widget.username, idRoom: widget.idRoom);
-            } else if (dataList2[0]['host_playing'].toString() == 'false' &&
-                dataList2[0]['competitor_playing'].toString() == 'false') {
+            } else if (yourData?['host_playing'].toString() == 'false' &&
+                yourData?['competitor_playing'].toString() == 'false') {
               return ResultPvP(
                   username: widget.username, idRoom: widget.idRoom);
-            } else if ((dataList2[0]['host_playing'].toString() == 'false' &&
-                    widget.username == dataList2[0]['host'].toString()) ||
-                (dataList2[0]['competitor_playing'].toString() == 'false' &&
-                    widget.username != dataList2[0]['host'].toString())) {
+            } else if ((yourData?['host_playing'].toString() == 'false' &&
+                    widget.username == yourData?['host'].toString()) ||
+                (yourData?['competitor_playing'].toString() == 'false' &&
+                    widget.username != yourData?['host'].toString())) {
               return loading();
             } else if (number < 11) {
               return Container(
@@ -248,7 +201,7 @@ class _PvPState extends State<PvP> {
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
                         Text(
                           'Score:$score',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Row(
                           children: [
@@ -271,7 +224,7 @@ class _PvPState extends State<PvP> {
                               ),
                               Text(
                                 '$seconds',
-                                style: TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 20),
                               )
                             ]),
                           ],
@@ -289,10 +242,10 @@ class _PvPState extends State<PvP> {
                         children: [
                           const Padding(padding: EdgeInsets.only(top: 70)),
                           Text('Số câu $number/10',
-                              style: TextStyle(color: Colors.white)),
-                          Padding(padding: EdgeInsets.only(top: 40)),
+                              style: const TextStyle(color: Colors.white)),
+                          const Padding(padding: EdgeInsets.only(top: 40)),
                           Text(ListItem.lst[randomid].question.toString(),
-                              style: TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white)),
                           const Padding(
                             padding: EdgeInsets.only(top: 60, right: 260),
                             child: Image(
@@ -326,7 +279,7 @@ class _PvPState extends State<PvP> {
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              check(button1);
+                              check(dapAnA);
                             },
                             child: Text(
                               ListItem.lst[randomid].answer1.toString(),
@@ -362,7 +315,7 @@ class _PvPState extends State<PvP> {
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              check(button2);
+                              check(dapAnB);
                             },
                             child: Text(
                               ListItem.lst[randomid].answer2.toString(),
@@ -375,7 +328,7 @@ class _PvPState extends State<PvP> {
                             ),
                           )),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 12)),
+                    const Padding(padding: EdgeInsets.only(top: 12)),
                     SizedBox(
                       width: 200,
                       height: 50,
@@ -398,7 +351,7 @@ class _PvPState extends State<PvP> {
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              check(button3);
+                              check(dapAnC);
                             },
                             child: Text(
                               ListItem.lst[randomid].answer3.toString(),
@@ -434,7 +387,7 @@ class _PvPState extends State<PvP> {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            check(button4);
+                            check(dapAnD);
                           },
                           child: Text(
                             ListItem.lst[randomid].answer4.toString(),
@@ -491,5 +444,28 @@ class _PvPState extends State<PvP> {
         ],
       ),
     );
+  }
+
+  //thong bao dap an
+  void dialog(String thongbao, Color colors, String img, String noidung) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Row(
+                children: [
+                  Text(
+                    thongbao,
+                    style: TextStyle(color: colors),
+                  ),
+                  Image(
+                    image: AssetImage(img),
+                    width: 25,
+                    height: 25,
+                  ),
+                ],
+              ),
+              content: Text(noidung),
+            ),
+        barrierDismissible: true);
   }
 }
