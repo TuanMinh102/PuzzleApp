@@ -1,13 +1,7 @@
-// import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:giaodien/ChoiGame.dart';
-
 import 'package:giaodien/TrangChu.dart';
-
-// void main() {
-//   runApp(const ChoiDon());
-// }
 
 class ChoiDon extends StatefulWidget {
   final String username;
@@ -22,7 +16,6 @@ class _ChoiDonState extends State<ChoiDon> {
   List<String> arr = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
 
   fetchDatabaseList() async {
-    // dynamic result = await DatabaseManager().getData();
     final result2 = await FirebaseFirestore.instance
         .collection('highscore')
         .where('username', isEqualTo: widget.username)
@@ -32,12 +25,14 @@ class _ChoiDonState extends State<ChoiDon> {
     } else {
       setState(() {
         dataList = result2.docs.map((e) => e.data()).toList();
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= 10; i++) {
           arr[i - 1] = dataList[0]['ai$i'].toString();
+        }
       });
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
@@ -49,9 +44,9 @@ class _ChoiDonState extends State<ChoiDon> {
       body: Container(
         width: 1080,
         height: 1920,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Column(
@@ -63,7 +58,7 @@ class _ChoiDonState extends State<ChoiDon> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.keyboard_arrow_left,
                       size: 40,
                     ),
@@ -79,8 +74,8 @@ class _ChoiDonState extends State<ChoiDon> {
                       );
                     },
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                  Center(
+                  const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
+                  const Center(
                     child: Text(
                       'Chơi Đơn',
                       style:
@@ -91,96 +86,125 @@ class _ChoiDonState extends State<ChoiDon> {
                 ],
               ),
             ),
-            Wrap(children: <Widget>[
-              for (int i = 1; i <= 10; i++)
-                if (i == 1)
-                  Container(
-                    padding: EdgeInsets.only(left: 30, top: 20),
-                    child: SizedBox(
-                      width: 70,
-                      height: 70,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.white),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
+            Center(
+              child: Wrap(spacing: 20, children: [
+                for (int i = 1; i <= 10; i++)
+                  if (i == 1)
+                    Container(
+                      padding: const EdgeInsets.only(left: 15, top: 60),
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
                                 builder: (context) => ChoiGame(
-                                      level: i,
-                                      username: widget.username,
-                                    )),
-                          );
-                        },
-                        child: Text(
-                          'Ải $i',
-                          style: TextStyle(color: Colors.black, fontSize: 10),
+                                  level: i,
+                                  username: widget.username,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Ải $i',
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 10),
+                          ),
+                        ),
+                      ),
+                    )
+                  else if (i != 1 && openLV(i) == false)
+                    Container(
+                      padding: const EdgeInsets.only(left: 15, top: 60),
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: ((context) => const AlertDialog(
+                                    title: Text('Thông Báo',
+                                        style: TextStyle(color: Colors.red)),
+                                    content:
+                                        Text('Bạn cần vượt qua ải trước đó'),
+                                  )),
+                            );
+                          },
+                          icon: const Image(
+                            image: AssetImage('images/lock.png'),
+                            width: 20,
+                            height: 20,
+                          ),
+                          label: Text(
+                            'Ải $i',
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ),
+                      ),
+                    )
+                  else if (i != 1 && openLV(i))
+                    Container(
+                      padding: const EdgeInsets.only(left: 15, top: 60),
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChoiGame(
+                                        level: i,
+                                        username: widget.username,
+                                      )),
+                            );
+                          },
+                          child: Text(
+                            'Ải $i',
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 10),
+                          ),
                         ),
                       ),
                     ),
-                  )
-                else if (i != 1 && OpenLV(i) == false)
-                  Container(
-                    padding: EdgeInsets.only(left: 30, top: 20),
-                    child: SizedBox(
-                      width: 70,
-                      height: 70,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.grey,
-                        ),
-                        onPressed: () {},
-                        icon: Image(
-                          image: AssetImage('images/lock.png'),
-                          width: 20,
-                          height: 20,
-                        ),
-                        label: Text(
-                          'Ải $i',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ),
-                    ),
-                  )
-                else if (i != 1 && OpenLV(i))
-                  Container(
-                    padding: EdgeInsets.only(left: 30, top: 20),
-                    child: SizedBox(
-                      width: 70,
-                      height: 70,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.white),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ChoiGame(
-                                      level: i,
-                                      username: widget.username,
-                                    )),
-                          );
-                        },
-                        child: Text(
-                          'Ải $i',
-                          style: TextStyle(color: Colors.black, fontSize: 10),
-                        ),
-                      ),
-                    ),
-                  ),
-            ]),
+              ]),
+            ),
           ],
         ),
       ),
     );
   }
 
-  int GetInitial(String string) {
+  int getInitial(String string) {
     return int.parse(string);
   }
 
-  bool OpenLV(int number) {
-    if (GetInitial(arr[number - 2]) < 25) {
+  bool openLV(int number) {
+    if (getInitial(arr[number - 2]) < 25) {
       return false;
     }
     return true;

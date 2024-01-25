@@ -1,6 +1,4 @@
 // import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:giaodien/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,13 +33,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _showPass = false;
-  AuthBloc authBloc = new AuthBloc();
-  TextEditingController _nameController = new TextEditingController();
-  TextEditingController _passController = new TextEditingController();
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _confirmController = new TextEditingController();
+  AuthBloc authBloc = AuthBloc();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
   List dataList = [];
-  @override
+
   fetchDatabaseList() async {
     dynamic result = await DatabaseManager().getUserData();
     if (result == null) {
@@ -53,11 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.circular(0),
                 color: Colors.white.withOpacity(0),
               ),
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: Column(
                 children: [
                   const Text(
@@ -95,41 +95,43 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(fontSize: 12),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: StreamBuilder(
                       stream: authBloc.nameStream,
                       builder: (context, snapshot) => TextField(
                         controller: _nameController,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.black),
                         decoration: InputDecoration(
                             labelText: "Tên đăng nhập",
                             errorText: snapshot.hasError
                                 ? snapshot.error.toString()
                                 : null,
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 color: Color(0xff888888), fontSize: 15)),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: StreamBuilder(
                       stream: authBloc.emailStream,
                       builder: (context, snapshot) => TextField(
                         controller: _emailController,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.black),
                         decoration: InputDecoration(
                             labelText: "Email",
                             errorText: snapshot.hasError
                                 ? snapshot.error.toString()
                                 : null,
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 color: Color(0xff888888), fontSize: 15)),
                       ),
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Stack(
                         alignment: AlignmentDirectional.centerEnd,
                         children: <Widget>[
@@ -137,23 +139,23 @@ class _MyHomePageState extends State<MyHomePage> {
                             stream: authBloc.passStream,
                             builder: (context, snapshot) => TextField(
                               controller: _passController,
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.black),
                               obscureText: !_showPass,
                               decoration: InputDecoration(
                                   labelText: "Mật khẩu",
                                   errorText: snapshot.hasError
                                       ? snapshot.error.toString()
                                       : null,
-                                  labelStyle: TextStyle(
+                                  labelStyle: const TextStyle(
                                       color: Color(0xff888888), fontSize: 15)),
                             ),
                           ),
                           GestureDetector(
-                            onTap: show_hide,
+                            onTap: showHide,
                             child: Text(
                               _showPass ? "ẨN" : "HIỆN",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
@@ -162,19 +164,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       )),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: StreamBuilder(
                       stream: authBloc.confirmStream,
                       builder: (context, snapshot) => TextField(
                         controller: _confirmController,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.black),
                         obscureText: !_showPass,
                         decoration: InputDecoration(
                             labelText: "Xác nhận mật khẩu",
                             errorText: snapshot.hasError
                                 ? snapshot.error.toString()
                                 : null,
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 color: Color(0xff888888), fontSize: 15)),
                       ),
                     ),
@@ -182,9 +185,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 35, top: 10),
+                        padding: const EdgeInsets.only(left: 35, top: 10),
                         child: FloatingActionButton.extended(
-                          label: Text(
+                          label: const Text(
                             'Trở về',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -200,15 +203,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 10, top: 10),
+                        padding: const EdgeInsets.only(left: 10, top: 10),
                         child: FloatingActionButton.extended(
-                          label: Text(
+                          label: const Text(
                             'Bấm để đăng ký',
                             style: TextStyle(color: Colors.white),
                           ),
                           backgroundColor: Colors.black,
                           onPressed: () {
-                            SignUp(dataList);
+                            signUp(dataList);
                           },
                         ),
                       ),
@@ -223,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ));
   }
 
-  void show_hide() {
+  void showHide() {
     setState(() {
       _showPass = !_showPass;
     });
@@ -255,7 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void SignUp(List<dynamic> l) {
+  void signUp(List<dynamic> l) {
     if (authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _confirmController.text, l)) {
       Map<String, String> datatosave = {

@@ -26,7 +26,7 @@ class DiemCao extends StatefulWidget {
 class _DiemCaoState extends State<DiemCao> {
   List dataList = [];
   List<String> arr = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
-  @override
+
   fetchDatabaseList() async {
     // dynamic result2 = await DatabaseManager().getData();
     final result2 = await FirebaseFirestore.instance
@@ -45,6 +45,7 @@ class _DiemCaoState extends State<DiemCao> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDatabaseList();
@@ -55,9 +56,9 @@ class _DiemCaoState extends State<DiemCao> {
       body: Container(
         width: 1080,
         height: 1920,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Center(
@@ -70,7 +71,7 @@ class _DiemCaoState extends State<DiemCao> {
                 child: Row(
                   children: [
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.keyboard_arrow_left,
                         size: 40,
                       ),
@@ -86,8 +87,8 @@ class _DiemCaoState extends State<DiemCao> {
                         );
                       },
                     ),
-                    Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                    Center(
+                    const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
+                    const Center(
                       child: Text(
                         'Điểm Cao',
                         style: TextStyle(
@@ -98,33 +99,72 @@ class _DiemCaoState extends State<DiemCao> {
                   ],
                 ),
               ),
-              Text("Account: " + widget.username),
-              Row(
-                children: [
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  Column(
-                    children: [
-                      Text(
-                        'Level',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      for (int i = 1; i <= 10; i++) Text('Ải $i'),
-                    ],
+              const Padding(padding: EdgeInsets.only(top: 60)),
+              Container(
+                width: 400,
+                height: 30,
+                child: Text(
+                  widget.username,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
-                  Padding(padding: EdgeInsets.only(left: 150)),
-                  Column(
-                    children: [
-                      Text(
-                        'Điểm',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      for (int i = 0; i < arr.length; i++)
-                        Text(arr[i].toString()),
-                    ],
-                  ),
-                ],
+                  textAlign: TextAlign.center,
+                ),
+                decoration: const BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10))),
+              ),
+              Container(
+                width: 400,
+                height: 450,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 20)),
+                    Column(
+                      children: [
+                        Text(
+                          'Cấp',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.red),
+                        ),
+                        for (int i = 1; i <= 10; i++)
+                          Text(
+                            i.toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                      ],
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 150)),
+                    Column(
+                      children: [
+                        Text(
+                          'Điểm',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.red),
+                        ),
+                        for (int i = 0; i < arr.length; i++)
+                          Text(arr[i].toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18)),
+                      ],
+                    ),
+                  ],
+                ),
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 227, 222, 222),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
               ),
             ],
           ),

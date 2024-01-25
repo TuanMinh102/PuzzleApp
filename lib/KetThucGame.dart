@@ -25,15 +25,15 @@ class _KetThucGameState extends State<KetThucGame> {
       body: Container(
         width: 1920,
         height: 1080,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
               "images/background.jpg",
             ),
           ),
         ),
         child: Center(
-          child: new GestureDetector(
+          child: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
@@ -44,35 +44,34 @@ class _KetThucGameState extends State<KetThucGame> {
                           )),
                 );
               },
-              child: new Container(
+              child: Container(
                 width: 350,
                 height: 500,
                 color: Colors.grey.withOpacity(0.8),
                 child: Column(
                   children: [
-                    Image(
+                    const Image(
                       image: AssetImage('images/winner.png'),
                       width: 200,
                       height: 200,
                     ),
                     Text(
-                      'Level' + widget.level.toString(),
+                      'Cấp ' + widget.level.toString(),
                       style: TextStyle(
                           color: Colors.yellow,
                           fontWeight: FontWeight.bold,
                           fontSize: 40),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 50)),
+                    const Padding(padding: EdgeInsets.only(top: 50)),
                     Text(
-                      'Score:' + widget.score.toString(),
+                      'Điểm: ' + widget.score.toString(),
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 20),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 20)),
-                    Padding(padding: EdgeInsets.only(top: 70)),
-                    Text(
+                    const Padding(padding: EdgeInsets.only(top: 90)),
+                    const Text(
                       'Ấn màn hình để tiếp tục',
                       style: TextStyle(
                           color: Colors.white,

@@ -12,7 +12,8 @@ class ThamGiaPhong extends StatefulWidget {
 }
 
 class _ThamGiaPhongState extends State<ThamGiaPhong> {
-  String docid = '';
+  String docid = 'null';
+
   @override
   void initState() {
     super.initState();
@@ -25,159 +26,161 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
           stream:
               FirebaseFirestore.instance.collection('room_list').snapshots(),
           builder: (context, snapshot) {
-            List<DocumentSnapshot> roomList = snapshot.data!.docs;
-            return Container(
-              width: 1080,
-              height: 1920,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("images/background.jpg"),
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return const Text('');
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              List<DocumentSnapshot> roomList = snapshot.data!.docs;
+              return container(roomList);
+            } else {
+              List<DocumentSnapshot> roomList = snapshot.data!.docs;
+              return container(roomList);
+            }
+          }),
+    );
+  }
+
+  Widget container(var roomList) {
+    return Container(
+      width: 1080,
+      height: 1920,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("images/background.jpg"),
+        ),
+      ),
+      child: Center(
+        child: Column(children: [
+          Container(
+            width: 1080,
+            height: 60,
+            color: Colors.white,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.keyboard_arrow_left,
+                    size: 40,
+                  ),
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DoiKhang(
+                          username: widget.username,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-              child: Center(
-                child: Column(children: [
+                const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
+                const Center(
+                  child: Text(
+                    'Tham Gia Phòng',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: 160,
+            height: 20,
+            child: TextField(
+                // controller: username,
+                decoration: InputDecoration(
+              labelText: "Nhập mã phòng",
+              icon: Icon(Icons.search),
+            )),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 20),
+          ),
+          Container(
+            width: 340,
+            height: 550,
+            color: Colors.white.withOpacity(0.5),
+            child: Column(
+              children: [
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                for (int i = 0;
+                    i < roomList.length &&
+                        roomList[i]['finish'].toString() != 'true';
+                    i++)
                   Container(
-                    width: 1080,
-                    height: 60,
-                    color: Colors.white,
+                    width: 310,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Colors.grey,
+                          ],
+                          stops: [
+                            0.0,
+                            1.0
+                          ],
+                          begin: FractionalOffset.topCenter,
+                          end: FractionalOffset.bottomCenter,
+                          tileMode: TileMode.repeated),
+                      color: Colors.white.withOpacity(0.77),
+                    ),
                     child: Row(
                       children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.keyboard_arrow_left,
-                            size: 40,
-                          ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        Text(
+                          'Id:' + roomList[i]['id'],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        Container(
+                          width: 1,
                           color: Colors.black,
+                          height: 30,
+                        ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        Text(
+                          'Host:' + roomList[i]['host'],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        Container(
+                          width: 1,
+                          color: Colors.black,
+                          height: 30,
+                        ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        Text(
+                          'Players:' + roomList[i]['players'],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        Container(
+                          width: 1,
+                          color: Colors.black,
+                          height: 30,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.login),
                           onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DoiKhang(
-                                  username: widget.username,
-                                ),
-                              ),
-                            );
+                            join(i, roomList);
                           },
                         ),
-                        const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                        const Center(
-                          child: Text(
-                            'Tham Gia Phòng',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    width: 160,
-                    height: 20,
-                    child: TextField(
-                        // controller: username,
-                        decoration: InputDecoration(
-                      labelText: "Nhập mã phòng",
-                      icon: Icon(Icons.search), //icon at head of input
-                    )),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                  ),
-                  Container(
-                    width: 340,
-                    height: 550,
-                    color: Colors.white.withOpacity(0.5),
-                    child: Column(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(top: 20)),
-                        for (int i = 0;
-                            i < roomList.length &&
-                                roomList[i]['finish'].toString() != 'true';
-                            i++)
-                          Container(
-                            width: 310,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                  colors: [
-                                    Colors.white,
-                                    Colors.grey,
-                                  ],
-                                  stops: [
-                                    0.0,
-                                    1.0
-                                  ],
-                                  begin: FractionalOffset.topCenter,
-                                  end: FractionalOffset.bottomCenter,
-                                  tileMode: TileMode.repeated),
-                              color: Colors.white.withOpacity(0.77),
-                            ),
-                            child: Row(
-                              children: [
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
-                                Text(
-                                  'Id:' + roomList[i]['id'],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
-                                Container(
-                                  width: 1,
-                                  color: Colors.black,
-                                  height: 30,
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
-                                Text(
-                                  'Host:' + roomList[i]['host'],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
-                                Container(
-                                  width: 1,
-                                  color: Colors.black,
-                                  height: 30,
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
-                                Text(
-                                  'Players:' + roomList[i]['players'],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
-                                Container(
-                                  width: 1,
-                                  color: Colors.black,
-                                  height: 30,
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.login),
-                                  onPressed: () {
-                                    join(i, roomList);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ]),
-              ),
-            );
-          }),
+              ],
+            ),
+          ),
+        ]),
+      ),
     );
   }
 
@@ -207,12 +210,12 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
         snapshot.docs.forEach((DocumentSnapshot doc) {
           setState(() {
             docid = doc.id;
+            final roomref =
+                FirebaseFirestore.instance.collection('room_list').doc(docid);
+            roomref.update({'competitor': widget.username, 'players': '2'});
           });
         });
       });
-      final room =
-          FirebaseFirestore.instance.collection('room_list').doc(docid);
-      room.update({'competitor': widget.username, 'players': '2'});
       Navigator.pop(context);
       Navigator.push(
         context,

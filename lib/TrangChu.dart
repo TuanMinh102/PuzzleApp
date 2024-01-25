@@ -75,16 +75,16 @@ class _TrangChuState extends State<TrangChu> {
                       end: FractionalOffset.bottomCenter,
                       tileMode: TileMode.repeated),
                 ),
-                child: Image(
+                child: const Image(
                   image: AssetImage('images/light-bulb.png'),
                 )),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            const Padding(padding: EdgeInsets.only(top: 30)),
             SizedBox(
               width: 200,
               height: 35,
               child: DecoratedBox(
                   decoration: BoxDecoration(
-                    gradient: new LinearGradient(
+                    gradient: const LinearGradient(
                         colors: [
                           Colors.white,
                           Colors.grey,
@@ -121,13 +121,13 @@ class _TrangChuState extends State<TrangChu> {
                     ),
                   )),
             ),
-            Padding(padding: EdgeInsets.only(top: 20)),
+            const Padding(padding: EdgeInsets.only(top: 20)),
             SizedBox(
               width: 200,
               height: 35,
               child: DecoratedBox(
                   decoration: BoxDecoration(
-                    gradient: new LinearGradient(
+                    gradient: const LinearGradient(
                         colors: [
                           Colors.white,
                           Colors.grey,
@@ -164,13 +164,13 @@ class _TrangChuState extends State<TrangChu> {
                     ),
                   )),
             ),
-            Padding(padding: EdgeInsets.only(top: 20)),
+            const Padding(padding: EdgeInsets.only(top: 20)),
             SizedBox(
               width: 200,
               height: 35,
               child: DecoratedBox(
                   decoration: BoxDecoration(
-                    gradient: new LinearGradient(
+                    gradient: const LinearGradient(
                         colors: [
                           Colors.white,
                           Colors.grey,
@@ -207,13 +207,13 @@ class _TrangChuState extends State<TrangChu> {
                     ),
                   )),
             ),
-            Padding(padding: EdgeInsets.only(top: 20)),
+            const Padding(padding: EdgeInsets.only(top: 20)),
             SizedBox(
               width: 200,
               height: 35,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -248,7 +248,7 @@ class _TrangChuState extends State<TrangChu> {
               height: 35,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: new LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [
                         Colors.white,
                         Colors.grey,
@@ -296,25 +296,26 @@ class _TrangChuState extends State<TrangChu> {
               top: 24 + MediaQuery.of(context).padding.top, bottom: 24),
           child: Column(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 52,
                 backgroundImage: AssetImage('images/user.png'),
               ),
-              SizedBox(height: 12),
-              Text(arr[0], style: TextStyle(fontSize: 28, color: Colors.white)),
+              const SizedBox(height: 12),
+              Text(arr[0],
+                  style: const TextStyle(fontSize: 28, color: Colors.white)),
               Text(
                 arr[1],
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
               Row(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(30, 60, 0, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(30, 60, 0, 0)),
                   SizedBox(
                     width: 150,
                     height: 30,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        gradient: new LinearGradient(
+                        gradient: const LinearGradient(
                             colors: [
                               Colors.white,
                               Colors.grey,
@@ -330,7 +331,7 @@ class _TrangChuState extends State<TrangChu> {
                         color: Colors.white,
                       ),
                       child: ElevatedButton.icon(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.history,
                           color: Colors.black,
                         ),
@@ -341,7 +342,7 @@ class _TrangChuState extends State<TrangChu> {
                           //       builder: (context) => const LichSuDau()),
                           // );
                         },
-                        label: Text(
+                        label: const Text(
                           'Lịch Sử Đấu',
                           style: TextStyle(color: Colors.black),
                         ),
@@ -353,13 +354,13 @@ class _TrangChuState extends State<TrangChu> {
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0)),
                   SizedBox(
                     width: 60,
                     height: 30,
                     child: DecoratedBox(
                         decoration: BoxDecoration(
-                          gradient: new LinearGradient(
+                          gradient: const LinearGradient(
                               colors: [
                                 Colors.white,
                                 Colors.grey,
@@ -375,7 +376,7 @@ class _TrangChuState extends State<TrangChu> {
                           color: Colors.white,
                         ),
                         child: ElevatedButton.icon(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.share,
                             color: Colors.black,
                             size: 12,
@@ -387,7 +388,7 @@ class _TrangChuState extends State<TrangChu> {
                             //       builder: (context) => const LichSuDau()),
                             // );
                           },
-                          label: Text(''),
+                          label: const Text(''),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.transparent,
                             onSurface: Colors.transparent,
@@ -397,35 +398,35 @@ class _TrangChuState extends State<TrangChu> {
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-              Divider(
+              const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+              const Divider(
                 height: 1,
                 color: Colors.white,
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-              Text('Thống kê',
+              const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+              const Text('Thống kê',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                       color: Colors.white)),
-              Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
+              const Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
               Row(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
                   SizedBox(
                     width: 120,
                     height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: Image(
+                      icon: const Image(
                         image: AssetImage('images/flame.png'),
                         width: 20,
                         height: 20,
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                       ),
-                      label: Text.rich(
+                      label: const Text.rich(
                         TextSpan(
                           text: '0\n',
                           style: TextStyle(
@@ -441,21 +442,21 @@ class _TrangChuState extends State<TrangChu> {
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(40, 0, 0, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(40, 0, 0, 0)),
                   SizedBox(
                     width: 120,
                     height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: Image(
+                      icon: const Image(
                         image: AssetImage('images/trophy.png'),
                         width: 20,
                         height: 20,
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                       ),
-                      label: Text.rich(
+                      label: const Text.rich(
                         TextSpan(
                           text: '0\n',
                           style: TextStyle(
@@ -473,24 +474,24 @@ class _TrangChuState extends State<TrangChu> {
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
+              const Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
               Row(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
                   SizedBox(
                     width: 120,
                     height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: Image(
+                      icon: const Image(
                         image: AssetImage('images/silver-medal.png'),
                         width: 20,
                         height: 20,
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                       ),
-                      label: Text.rich(
+                      label: const Text.rich(
                         TextSpan(
                           text: 'Bạc\n',
                           style: TextStyle(
@@ -506,21 +507,21 @@ class _TrangChuState extends State<TrangChu> {
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(40, 0, 0, 0)),
+                  const Padding(padding: EdgeInsets.fromLTRB(40, 0, 0, 0)),
                   SizedBox(
                     width: 120,
                     height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: Image(
+                      icon: const Image(
                         image: AssetImage('images/gold-medal.png'),
                         width: 20,
                         height: 20,
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                       ),
-                      label: Text.rich(
+                      label: const Text.rich(
                         TextSpan(
                           text: 'Vàng\n',
                           style: TextStyle(

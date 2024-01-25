@@ -67,7 +67,7 @@ class _ChoiGameState extends State<ChoiGame> {
     super.initState();
     fetchDatabaseList();
     getdocumentid();
-    Level();
+    level();
   }
 
   Future<void> delay(int millis) async {
@@ -323,18 +323,18 @@ class _ChoiGameState extends State<ChoiGame> {
     );
   }
 
-  int GetInitial(String string) {
+  int getInitial(String string) {
     return int.parse(string);
   }
 
   bool checkHighScore(String string, int score) {
-    if (GetInitial(string) < score) {
+    if (getInitial(string) < score) {
       return true;
     }
     return false;
   }
 
-  void Level() {
+  void level() {
     setState(() {
       if (widget.level == 1) {
         index = 0;
@@ -372,7 +372,6 @@ class _ChoiGameState extends State<ChoiGame> {
       dialog('Sai rồi', Colors.red, 'images/cross.png',
           'Rất tiếc bạn đã trả lời sai :(');
     }
-    await delay(1500);
 
     setState(() {
       index++;
