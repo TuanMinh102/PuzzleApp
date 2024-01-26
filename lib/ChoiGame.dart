@@ -146,11 +146,11 @@ class _ChoiGameState extends State<ChoiGame> {
               ],
             ),
             Container(
-              width: 300,
-              height: 300,
+              width: 1000,
+              height: 350,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/table.png'),
+                  image: AssetImage('images/board.png'),
                 ),
               ),
               child: Column(
@@ -158,15 +158,13 @@ class _ChoiGameState extends State<ChoiGame> {
                   const Padding(padding: EdgeInsets.only(top: 70)),
                   Text('Số câu $number/10',
                       style: const TextStyle(color: Colors.white)),
-                  const Padding(padding: EdgeInsets.only(top: 20)),
-                  Text(ListItem.lst[index].question.toString(),
-                      style: const TextStyle(color: Colors.white)),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 70, right: 260),
-                    child: Image(
-                      image: AssetImage('images/koala.png'),
-                      width: 45,
-                      height: 45,
+                  const Padding(padding: EdgeInsets.only(top: 5)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 35, right: 35),
+                    child: Text(
+                      ListItem.lst[index].question.toString(),
+                      style: const TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],

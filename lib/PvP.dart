@@ -95,8 +95,6 @@ class _PvPState extends State<PvP> {
     setState(() {
       number++;
     });
-
-    //await delay(1500);
   }
 
   Future<void> delay(int millis) async {
@@ -244,27 +242,23 @@ class _PvPState extends State<PvP> {
             ],
           ),
           Container(
-            width: 300,
-            height: 300,
+            width: 1000,
+            height: 350,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage('images/table.png'),
+              image: AssetImage('images/board.png'),
             )),
             child: Column(
               children: [
                 const Padding(padding: EdgeInsets.only(top: 70)),
                 Text('Số câu $number/10',
                     style: const TextStyle(color: Colors.white)),
-                const Padding(padding: EdgeInsets.only(top: 40)),
-                Text(ListItem.lst[randomid].question.toString(),
-                    style: const TextStyle(color: Colors.white)),
-                const Padding(
-                  padding: EdgeInsets.only(top: 60, right: 260),
-                  child: Image(
-                    image: AssetImage('images/koala.png'),
-                    width: 45,
-                    height: 45,
-                  ),
+                const Padding(padding: EdgeInsets.only(top: 5)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 35, right: 35),
+                  child: Text(ListItem.lst[randomid].question.toString(),
+                      style: const TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center),
                 ),
               ],
             ),
