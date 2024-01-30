@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:giaodien/BangXepHang.dart';
@@ -19,8 +20,29 @@ class _DoiKhangState extends State<DoiKhang> {
   List dataList = [];
   int randomid = 1;
 
+  fetchDatabaseList() async {
+    final result2 =
+        await FirebaseFirestore.instance.collection('room_list').get();
+    if (result2 == null) {
+      print("unable");
+    } else {
+      setState(() {
+        dataList = result2.docs.map((e) => e.data()).toList();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDatabaseList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime currentDate = DateTime.now();
+    var formatter = DateFormat('dd-MM-yyyy');
+    String date = formatter.format(currentDate);
     return Scaffold(
       body: Container(
         width: 1080,
@@ -142,7 +164,9 @@ class _DoiKhangState extends State<DoiKhang> {
                       'start': '0',
                       'host_playing': 'true',
                       'competitor_playing': 'true',
-                      'finish': 'false'
+                      'finish': 'false',
+                      'winner': '',
+                      'day': date
                     };
                     FirebaseFirestore.instance
                         .collection('room_list')
@@ -215,41 +239,44 @@ class _DoiKhangState extends State<DoiKhang> {
             width: 150,
             height: 35,
             child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: [
-                        Colors.white,
-                        Colors.grey,
-                      ],
-                      stops: [
-                        0.0,
-                        1.0
-                      ],
-                      begin: FractionalOffset.topCenter,
-                      end: FractionalOffset.bottomCenter,
-                      tileMode: TileMode.repeated),
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Colors.grey,
+                    ],
+                    stops: [
+                      0.0,
+                      1.0
+                    ],
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    tileMode: TileMode.repeated),
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          BangXepHang(username: widget.username),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Bảng xếp hạng',
+                  style: TextStyle(color: Colors.black, fontSize: 15),
                 ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BangXepHang()),
-                    );
-                  },
-                  child: Text(
-                    'Bảng xếp hạng',
-                    style: TextStyle(color: Colors.black, fontSize: 15),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent,
-                    onSurface: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                  ),
-                )),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.transparent,
+                  onSurface: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                ),
+              ),
+            ),
           ),
         ]),
       ),
@@ -265,12 +292,11 @@ class _DoiKhangState extends State<DoiKhang> {
           rng = Random();
           flag = false;
         }
-        ;
       }
       if (flag == true) break;
     }
     setState(() {
-      randomid = rng.nextInt(1000);
+      randomid = rng.nextInt(10000);
     });
   }
 }

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:giaodien/Thongtin.dart';
 
+import 'DoiKhang.dart';
+
 class BangXepHang extends StatefulWidget {
-  const BangXepHang({super.key});
+  final String username;
+  const BangXepHang({super.key, required this.username});
 
   @override
   State<BangXepHang> createState() => _BangXepHangState();
@@ -16,9 +19,9 @@ class _BangXepHangState extends State<BangXepHang> {
       body: Container(
         width: 1080,
         height: 1920,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Center(
@@ -30,17 +33,19 @@ class _BangXepHangState extends State<BangXepHang> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.keyboard_arrow_left,
                       size: 40,
                     ),
                     color: Colors.black,
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const DoiKhang()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DoiKhang(username: widget.username),
+                        ),
+                      );
                     },
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
@@ -76,7 +81,9 @@ class _BangXepHangState extends State<BangXepHang> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ThongTin()),
+                            builder: (context) =>
+                                ThongTin(username: widget.username),
+                          ),
                         );
                       },
                       child: new Container(
@@ -128,7 +135,9 @@ class _BangXepHangState extends State<BangXepHang> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ThongTin()),
+                            builder: (context) =>
+                                ThongTin(username: widget.username),
+                          ),
                         );
                       },
                       child: new Container(

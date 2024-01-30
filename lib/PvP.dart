@@ -124,9 +124,9 @@ class _PvPState extends State<PvP> {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return const Text('');
+              return const Text('Something wrong');
             } else if (!snapshot.hasData || snapshot.data == null) {
-              return const Text('');
+              return const Text('Data is null');
             } else {
               var yourData = snapshot.data!.data() as Map<String, dynamic>?;
               if (yourData != null) {
@@ -141,6 +141,7 @@ class _PvPState extends State<PvP> {
                       username: widget.username, idRoom: widget.idRoom);
                 } else if (yourData['host_playing'] == 'false' &&
                     yourData['competitor_playing'] == 'false') {
+                  updateWinner(yourData);
                   return ResultPvP(
                       username: widget.username, idRoom: widget.idRoom);
                 } else if ((yourData['host_playing'] == 'false' &&
@@ -469,5 +470,21 @@ class _PvPState extends State<PvP> {
               content: Text(noidung),
             ),
         barrierDismissible: true);
+  }
+
+// cap nhat nguoi chien thang
+  void updateWinner(var yourdata) {
+    final victory =
+        FirebaseFirestore.instance.collection('room_list').doc(docid);
+    victory.update({'winner': winner(yourdata)});
+  }
+
+// tra ve ai la nguoi thang
+  String winner(var yourdata) {
+    if (int.parse(yourdata['score_host']) >
+        int.parse(yourdata['score_competitor'])) {
+      return yourdata['host'];
+    }
+    return yourdata['competitor'];
   }
 }

@@ -2,42 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:giaodien/BangXepHang.dart';
 import 'package:giaodien/LichSuDau.dart';
 
-void main() {
-  runApp(const ThongTin());
-}
-
-class ThongTin extends StatelessWidget {
-  const ThongTin({super.key});
+class ThongTin extends StatefulWidget {
+  final String username;
+  const ThongTin({super.key, required this.username});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  State<ThongTin> createState() => _ThongTinState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _ThongTinState extends State<ThongTin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
           width: 1080,
           height: 1920,
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("images/background.jpg"),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/background.jpg"),
             ),
           ),
           child: Center(
@@ -58,7 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const BangXepHang()),
+                            builder: (context) => BangXepHang(
+                              username: widget.username,
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -135,7 +120,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LichSuDau()),
+                                builder: (context) =>
+                                    LichSuDau(username: widget.username),
+                              ),
                             );
                           },
                           label: Text(

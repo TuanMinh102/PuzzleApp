@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:giaodien/ChoiDon.dart';
 import 'package:giaodien/DiemCao.dart';
 import 'package:giaodien/DoiKhang.dart';
+import 'package:giaodien/LichSuDau.dart';
 import 'main.dart';
-
-// void main() {
-//   runApp(const TrangChu());
-// }
 
 class TrangChu extends StatefulWidget {
   final String username;
@@ -21,7 +18,6 @@ class _TrangChuState extends State<TrangChu> {
   List dataList = [];
   List<String> arr = ['username', 'email'];
   fetchDatabaseList() async {
-    // dynamic result2 = await DatabaseManager().getData();
     final result2 = await FirebaseFirestore.instance
         .collection('accounts_list')
         .where('username', isEqualTo: widget.username)
@@ -45,18 +41,18 @@ class _TrangChuState extends State<TrangChu> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: 1920,
-        height: 1080,
+        width: screenSize.width,
+        height: screenSize.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/background.jpg"),
           ),
         ),
         child: Center(
-          child: Column(children: [
-            const Padding(padding: EdgeInsets.only(top: 30)),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
                 width: 150,
                 height: 150,
@@ -83,43 +79,44 @@ class _TrangChuState extends State<TrangChu> {
               width: 200,
               height: 35,
               child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Colors.grey,
-                        ],
-                        stops: [
-                          0.0,
-                          1.0
-                        ],
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        tileMode: TileMode.repeated),
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [
+                        Colors.white,
+                        Colors.grey,
+                      ],
+                      stops: [
+                        0.0,
+                        1.0
+                      ],
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      tileMode: TileMode.repeated),
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChoiDon(
+                                username: widget.username,
+                              )),
+                    );
+                  },
+                  child: Text(
+                    'Chơi Đơn',
+                    style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChoiDon(
-                                  username: widget.username,
-                                )),
-                      );
-                    },
-                    child: Text(
-                      'Chơi Đơn',
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      onSurface: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                  )),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    onSurface: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
+                ),
+              ),
             ),
             const Padding(padding: EdgeInsets.only(top: 20)),
             SizedBox(
@@ -336,11 +333,15 @@ class _TrangChuState extends State<TrangChu> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => const LichSuDau()),
-                          // );
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LichSuDau(
+                                username: widget.username,
+                              ),
+                            ),
+                          );
                         },
                         label: const Text(
                           'Lịch Sử Đấu',

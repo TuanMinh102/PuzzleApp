@@ -208,47 +208,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ]),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(55, 40, 0, 0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            height: 40,
-                            child: FloatingActionButton.extended(
-                                label: const Text(
-                                  'Đăng nhập',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                backgroundColor: Colors.black,
-                                onPressed: () {
-                                  Login(dataList);
-                                }),
-                          ),
-                          const Padding(
-                              padding: EdgeInsets.fromLTRB(10, 40, 0, 0)),
-                          SizedBox(
-                            width: 100,
-                            height: 40,
-                            child: FloatingActionButton.extended(
-                              label: const Text(
-                                'Chơi ngay',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              backgroundColor: Colors.black,
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TrangChu(
-                                      username: _userController.text,
-                                    ),
-                                  ),
-                                );
-                              },
+                      padding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+                      child: SizedBox(
+                        width: 250,
+                        height: 40,
+                        child: FloatingActionButton.extended(
+                            label: const Text(
+                              'Đăng nhập',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          ),
-                        ],
+                            backgroundColor: Colors.black,
+                            onPressed: () {
+                              Login(dataList);
+                            }),
                       ),
                     ),
                   ],

@@ -29,7 +29,7 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
-              return const Text('');
+              return const Text('Something wrong');
             } else if (!snapshot.hasData || snapshot.data == null) {
               List<DocumentSnapshot> roomList = snapshot.data!.docs;
               return container(roomList);
