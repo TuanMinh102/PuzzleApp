@@ -105,18 +105,20 @@ class _ResultPvPState extends State<ResultPvP> {
                         style: TextStyle(color: Colors.red, fontSize: 50)),
                   const Padding(padding: EdgeInsets.only(left: 20)),
                   if (winner(yourData) == true)
-                    const Row(children: [
-                      Image(
-                        image: AssetImage('images/winner.png'),
-                        width: 200,
-                        height: 200,
-                      ),
-                      Image(
-                        image: AssetImage('images/arrow-up.png'),
-                        width: 50,
-                        height: 50,
-                      ),
-                    ])
+                    const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image(
+                            image: AssetImage('images/winner.png'),
+                            width: 200,
+                            height: 200,
+                          ),
+                          Image(
+                            image: AssetImage('images/arrow-up.png'),
+                            width: 50,
+                            height: 50,
+                          ),
+                        ])
                   else
                     const Row(children: [
                       Image(
