@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -233,12 +231,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+// An hien mat khau
   void show_hide() {
     setState(() {
       _showPass = !_showPass;
     });
   }
 
+//
   Widget trang(int toado, double rong, double dai) {
     return Transform.rotate(
       angle: toado * 3.14 / 180,
@@ -265,6 +265,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+// Kiem tra dang nhap
   void Login(List<dynamic> l) {
     if (bloc.isValidInput(_userController.text, _passController.text) &&
         bloc.isValidAccount(_userController.text, _passController.text, l)) {

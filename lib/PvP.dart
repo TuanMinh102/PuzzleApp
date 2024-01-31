@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:giaodien/DoiKhang.dart';
 import 'package:giaodien/list-question.dart';
 import 'package:giaodien/ResultPvP.dart';
-// void main() {
-//   runApp(const PvP());
-// }
 
 class PvP extends StatefulWidget {
   final String username;
@@ -163,9 +160,10 @@ class _PvPState extends State<PvP> {
   }
 
   Widget container(var youData) {
+    Size screenSize = MediaQuery.of(context).size;
     return Container(
-      width: 1080,
-      height: 1920,
+      width: screenSize.width,
+      height: screenSize.height,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("images/background.jpg"),
@@ -174,7 +172,7 @@ class _PvPState extends State<PvP> {
       child: Center(
         child: Column(children: [
           Container(
-            width: 1080,
+            width: screenSize.width,
             height: 60,
             color: Colors.white,
             child: Row(
@@ -196,8 +194,7 @@ class _PvPState extends State<PvP> {
                     );
                   },
                 ),
-                const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                const Center(
+                const Expanded(
                   child: Text(
                     'PvP',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -208,10 +205,10 @@ class _PvPState extends State<PvP> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
               Text(
-                'Score:$score',
+                'Score: $score',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
@@ -227,7 +224,7 @@ class _PvPState extends State<PvP> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Row(children: [
-                    const Padding(padding: EdgeInsets.only(left: 70)),
+                    const Padding(padding: EdgeInsets.only(left: 100)),
                     const Image(
                       image: AssetImage('images/hourglass.png'),
                       width: 30,
@@ -243,12 +240,13 @@ class _PvPState extends State<PvP> {
             ],
           ),
           Container(
-            width: 1000,
+            width: 400,
             height: 350,
             decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('images/board.png'),
-            )),
+              image: DecorationImage(
+                image: AssetImage('images/table.png'),
+              ),
+            ),
             child: Column(
               children: [
                 const Padding(padding: EdgeInsets.only(top: 70)),

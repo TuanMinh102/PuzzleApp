@@ -1,10 +1,8 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:giaodien/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giaodien/DatabaseManager.dart';
-// import 'package:giaodien/TrangChu.dart';
-// import 'dart:async';
+
 import 'package:giaodien/auth_bloc.dart';
 
 class DangKy extends StatelessWidget {
@@ -59,78 +57,84 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        body: Container(
-      height: 1920,
-      width: 1080,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            "images/background.jpg",
+      body: Container(
+        width: screenSize.width,
+        height: screenSize.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              "images/background.jpg",
+            ),
           ),
         ),
-      ),
-      child: Center(
-        child: Stack(
-          children: [
-            trang(355, 300, 570),
-            trang(3, 300, 570),
-            Container(
-              width: 300,
-              height: 600,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(0),
-                color: Colors.white.withOpacity(0),
-              ),
-              padding: const EdgeInsets.only(top: 10),
-              child: Column(
-                children: [
-                  const Text(
-                    'Đăng ký',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                  ),
-                  const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-                  const Text(
-                    'Điền đầy đủ thông tin đăng ký của bạn.',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: StreamBuilder(
-                      stream: authBloc.nameStream,
-                      builder: (context, snapshot) => TextField(
-                        controller: _nameController,
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.black),
-                        decoration: InputDecoration(
+        child: Center(
+          child: Stack(
+            children: [
+              trang(355, 300, 570),
+              trang(3, 300, 570),
+              Container(
+                width: 300,
+                height: 600,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                  color: Colors.white.withOpacity(0),
+                ),
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Đăng ký',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    ),
+                    const Text(
+                      'Điền đầy đủ thông tin đăng ký của bạn.',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: StreamBuilder(
+                        stream: authBloc.nameStream,
+                        builder: (context, snapshot) => TextField(
+                          controller: _nameController,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
                             labelText: "Tên đăng nhập",
                             errorText: snapshot.hasError
                                 ? snapshot.error.toString()
                                 : null,
                             labelStyle: const TextStyle(
-                                color: Color(0xff888888), fontSize: 15)),
+                                color: Color(0xff888888), fontSize: 15),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: StreamBuilder(
-                      stream: authBloc.emailStream,
-                      builder: (context, snapshot) => TextField(
-                        controller: _emailController,
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.black),
-                        decoration: InputDecoration(
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: StreamBuilder(
+                        stream: authBloc.emailStream,
+                        builder: (context, snapshot) => TextField(
+                          controller: _emailController,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
                             labelText: "Email",
                             errorText: snapshot.hasError
                                 ? snapshot.error.toString()
                                 : null,
                             labelStyle: const TextStyle(
-                                color: Color(0xff888888), fontSize: 15)),
+                                color: Color(0xff888888), fontSize: 15),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
+                    Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Stack(
                         alignment: AlignmentDirectional.centerEnd,
@@ -143,12 +147,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   fontSize: 18, color: Colors.black),
                               obscureText: !_showPass,
                               decoration: InputDecoration(
-                                  labelText: "Mật khẩu",
-                                  errorText: snapshot.hasError
-                                      ? snapshot.error.toString()
-                                      : null,
-                                  labelStyle: const TextStyle(
-                                      color: Color(0xff888888), fontSize: 15)),
+                                labelText: "Mật khẩu",
+                                errorText: snapshot.hasError
+                                    ? snapshot.error.toString()
+                                    : null,
+                                labelStyle: const TextStyle(
+                                    color: Color(0xff888888), fontSize: 15),
+                              ),
                             ),
                           ),
                           GestureDetector(
@@ -160,78 +165,83 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
                             ),
-                          )
+                          ),
                         ],
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: StreamBuilder(
-                      stream: authBloc.confirmStream,
-                      builder: (context, snapshot) => TextField(
-                        controller: _confirmController,
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.black),
-                        obscureText: !_showPass,
-                        decoration: InputDecoration(
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: StreamBuilder(
+                        stream: authBloc.confirmStream,
+                        builder: (context, snapshot) => TextField(
+                          controller: _confirmController,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black),
+                          obscureText: !_showPass,
+                          decoration: InputDecoration(
                             labelText: "Xác nhận mật khẩu",
                             errorText: snapshot.hasError
                                 ? snapshot.error.toString()
                                 : null,
                             labelStyle: const TextStyle(
-                                color: Color(0xff888888), fontSize: 15)),
+                                color: Color(0xff888888), fontSize: 15),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 35, top: 10),
-                        child: FloatingActionButton.extended(
-                          label: const Text(
-                            'Trở về',
-                            style: TextStyle(color: Colors.white),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 35, top: 10),
+                          child: FloatingActionButton.extended(
+                            label: const Text(
+                              'Trở về',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor: Colors.black,
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const DangNhap()),
+                              );
+                            },
                           ),
-                          backgroundColor: Colors.black,
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const DangNhap()),
-                            );
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: FloatingActionButton.extended(
-                          label: const Text(
-                            'Bấm để đăng ký',
-                            style: TextStyle(color: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 10),
+                          child: FloatingActionButton.extended(
+                            label: const Text(
+                              'Bấm để đăng ký',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor: Colors.black,
+                            onPressed: () {
+                              signUp(dataList);
+                            },
                           ),
-                          backgroundColor: Colors.black,
-                          onPressed: () {
-                            signUp(dataList);
-                          },
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
+// Hien thi mat khau
   void showHide() {
     setState(() {
       _showPass = !_showPass;
     });
   }
 
+//
   Widget trang(int toado, double rong, double dai) {
     return Transform.rotate(
       angle: toado * 3.14 / 180,
@@ -258,6 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+//Kiem tra dang ky
   void signUp(List<dynamic> l) {
     if (authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _confirmController.text, l)) {

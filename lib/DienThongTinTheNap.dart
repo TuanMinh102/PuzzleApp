@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
-void main() {
-  runApp(const DienThongTinTheNap());
-}
-
 class DienThongTinTheNap extends StatelessWidget {
   const DienThongTinTheNap({super.key});
 

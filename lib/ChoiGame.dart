@@ -76,10 +76,11 @@ class _ChoiGameState extends State<ChoiGame> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: 1080,
-        height: 1920,
+        width: screenSize.width,
+        height: screenSize.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/background.jpg"),
@@ -88,7 +89,7 @@ class _ChoiGameState extends State<ChoiGame> {
         child: Center(
           child: Column(children: [
             Container(
-              width: 1080,
+              width: screenSize.width,
               height: 60,
               color: Colors.white,
               child: Row(
@@ -110,10 +111,9 @@ class _ChoiGameState extends State<ChoiGame> {
                       );
                     },
                   ),
-                  const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                  Center(
+                  Expanded(
                     child: Text(
-                      'Level' + widget.level.toString(),
+                      'Level ' + widget.level.toString(),
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20),
                       textAlign: TextAlign.center,
@@ -123,15 +123,15 @@ class _ChoiGameState extends State<ChoiGame> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
                 Text(
-                  'Score:$score',
+                  'Score: $score',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Row(
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 110)),
+                    Padding(padding: EdgeInsets.only(left: 100)),
                     Image(
                       image: AssetImage('images/light-bulb.png'),
                       width: 30,
@@ -146,11 +146,11 @@ class _ChoiGameState extends State<ChoiGame> {
               ],
             ),
             Container(
-              width: 1000,
+              width: 400,
               height: 350,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/board.png'),
+                  image: AssetImage('images/table.png'),
                 ),
               ),
               child: Column(

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giaodien/TrangChu.dart';
 
-// void main() {
-//   runApp( KetThucGame());
-// }
-
 class KetThucGame extends StatefulWidget {
   final int score;
   final int level;

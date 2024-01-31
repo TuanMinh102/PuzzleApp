@@ -97,9 +97,10 @@ class _PhongDauState extends State<PhongDau> {
   }
 
   Widget container(var yourData) {
+    Size screenSize = MediaQuery.of(context).size;
     return Container(
-      width: 1080,
-      height: 1920,
+      width: screenSize.width,
+      height: screenSize.height,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("images/background.jpg"),
@@ -107,7 +108,7 @@ class _PhongDauState extends State<PhongDau> {
       ),
       child: Column(children: [
         Container(
-          width: 1400,
+          width: screenSize.width,
           height: 60,
           color: Colors.white,
           child: Row(
@@ -130,8 +131,7 @@ class _PhongDauState extends State<PhongDau> {
                   );
                 },
               ),
-              const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-              const Center(
+              const Expanded(
                 child: Text(
                   'Phòng Đấu',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -143,56 +143,53 @@ class _PhongDauState extends State<PhongDau> {
         ),
         Text(
           'ID:' + widget.idRoom,
-          style: TextStyle(color: Colors.red),
+          style: const TextStyle(color: Colors.red),
         ),
         const Padding(padding: EdgeInsets.all(20)),
-        Center(
-          child: Row(children: [
-            const Padding(padding: EdgeInsets.only(left: 80)),
-            Column(children: [
-              const Image(
-                image: AssetImage('images/crown.png'),
-                width: 30,
-                height: 30,
-              ),
-              const Image(
-                image: AssetImage('images/user.png'),
-                width: 55,
-                height: 55,
-              ),
-              Text(yourData?['host']),
-            ]),
-            const Padding(padding: EdgeInsets.only(left: 30)),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Column(children: [
             const Image(
-              image: AssetImage('images/vs.png'),
+              image: AssetImage('images/crown.png'),
+              width: 30,
+              height: 30,
+            ),
+            const Image(
+              image: AssetImage('images/user.png'),
               width: 55,
               height: 55,
             ),
-            const Padding(padding: EdgeInsets.only(left: 30)),
-            Column(
-              children: [
-                const Padding(padding: EdgeInsets.only(top: 20)),
-                if (yourData?['competitor'] == '')
-                  Container(
-                    width: 55,
-                    height: 55,
-                    color: Colors.white,
-                    child: IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
-                  )
-                else
-                  const Image(
-                    image: AssetImage('images/user.png'),
-                    width: 55,
-                    height: 55,
-                  ),
-                Text(yourData?['competitor']),
-              ],
-            ),
+            Text(yourData?['host']),
           ]),
-        ),
+          const Padding(padding: EdgeInsets.only(left: 30)),
+          const Image(
+            image: AssetImage('images/vs.png'),
+            width: 55,
+            height: 55,
+          ),
+          const Padding(padding: EdgeInsets.only(left: 30)),
+          Column(
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 20)),
+              if (yourData?['competitor'] == '')
+                Container(
+                  width: 55,
+                  height: 55,
+                  color: Colors.white,
+                  child: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {},
+                  ),
+                )
+              else
+                const Image(
+                  image: AssetImage('images/user.png'),
+                  width: 55,
+                  height: 55,
+                ),
+              Text(yourData?['competitor']),
+            ],
+          ),
+        ]),
         const Padding(padding: EdgeInsets.only(top: 70)),
         if (yourData?['players'] == '2' && yourData?['host'] == widget.username)
           ElevatedButton.icon(

@@ -289,15 +289,14 @@ class _TrangChuState extends State<TrangChu> {
       drawer: Drawer(
         child: Container(
           color: Colors.blue.shade700,
-          padding: EdgeInsets.only(
-              top: 24 + MediaQuery.of(context).padding.top, bottom: 24),
+          padding:
+              EdgeInsets.only(top: 30 + MediaQuery.of(context).padding.top),
           child: Column(
             children: [
               const CircleAvatar(
                 radius: 52,
                 backgroundImage: AssetImage('images/user.png'),
               ),
-              const SizedBox(height: 12),
               Text(arr[0],
                   style: const TextStyle(fontSize: 28, color: Colors.white)),
               Text(
@@ -305,8 +304,9 @@ class _TrangChuState extends State<TrangChu> {
                 style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(padding: EdgeInsets.fromLTRB(30, 60, 0, 0)),
+                  const Padding(padding: EdgeInsets.only(top: 60)),
                   SizedBox(
                     width: 150,
                     height: 30,
@@ -355,190 +355,105 @@ class _TrangChuState extends State<TrangChu> {
                       ),
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0)),
+                  const Padding(padding: EdgeInsets.only(left: 20)),
                   SizedBox(
                     width: 60,
                     height: 30,
                     child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                              colors: [
-                                Colors.white,
-                                Colors.grey,
-                              ],
-                              stops: [
-                                0.0,
-                                1.0
-                              ],
-                              begin: FractionalOffset.topCenter,
-                              end: FractionalOffset.bottomCenter,
-                              tileMode: TileMode.repeated),
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Colors.grey,
+                            ],
+                            stops: [
+                              0.0,
+                              1.0
+                            ],
+                            begin: FractionalOffset.topCenter,
+                            end: FractionalOffset.bottomCenter,
+                            tileMode: TileMode.repeated),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: ElevatedButton.icon(
+                        icon: const Icon(
+                          Icons.share,
+                          color: Colors.black,
+                          size: 12,
                         ),
-                        child: ElevatedButton.icon(
-                          icon: const Icon(
-                            Icons.share,
-                            color: Colors.black,
-                            size: 12,
-                          ),
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const LichSuDau()),
-                            // );
-                          },
-                          label: const Text(''),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.transparent,
-                            onSurface: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                          ),
-                        )),
+                        onPressed: () {},
+                        label: const Text(''),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.transparent,
+                          onSurface: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               const Divider(
                 height: 1,
                 color: Colors.white,
               ),
-              const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-              const Text('Thống kê',
+              const Padding(padding: EdgeInsets.only(top: 20)),
+              const Text('Thống Kê',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                       color: Colors.white)),
-              const Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
+              const Padding(padding: EdgeInsets.only(top: 40)),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
-                  SizedBox(
-                    width: 120,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Image(
-                        image: AssetImage('images/flame.png'),
-                        width: 20,
-                        height: 20,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                      label: const Text.rich(
-                        TextSpan(
-                          text: '0\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Chuỗi Thắng',
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.fromLTRB(40, 0, 0, 0)),
-                  SizedBox(
-                    width: 120,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Image(
-                        image: AssetImage('images/trophy.png'),
-                        width: 20,
-                        height: 20,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                      label: const Text.rich(
-                        TextSpan(
-                          text: '0\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Trận Thắng',
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  sizeBox('images/flame.png', 'Chuỗi Thắng', '0\n'),
+                  const Padding(padding: EdgeInsets.only(left: 20)),
+                  sizeBox('images/trophy.png', 'Trận Thắng', '0\n'),
                 ],
               ),
-              const Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
+              const Padding(padding: EdgeInsets.only(top: 40)),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
-                  SizedBox(
-                    width: 120,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Image(
-                        image: AssetImage('images/silver-medal.png'),
-                        width: 20,
-                        height: 20,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                      label: const Text.rich(
-                        TextSpan(
-                          text: 'Bạc\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Hiện Tại',
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.fromLTRB(40, 0, 0, 0)),
-                  SizedBox(
-                    width: 120,
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Image(
-                        image: AssetImage('images/gold-medal.png'),
-                        width: 20,
-                        height: 20,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                      label: const Text.rich(
-                        TextSpan(
-                          text: 'Vàng\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Cao Nhất',
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  sizeBox('images/silver-medal.png', 'Hiện Tại', 'Bạc\n'),
+                  const Padding(padding: EdgeInsets.only(left: 20)),
+                  sizeBox('images/gold-medal.png', 'Cao Nhất', 'Vàng\n')
                 ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+// SizeBox
+  Widget sizeBox(String img, String title, String content) {
+    return SizedBox(
+      width: 130,
+      height: 50,
+      child: ElevatedButton.icon(
+        onPressed: () {},
+        icon: Image(
+          image: AssetImage(img),
+          width: 20,
+          height: 20,
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+        ),
+        label: Text.rich(
+          TextSpan(
+            text: content,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black),
+            children: <TextSpan>[
+              TextSpan(
+                text: title,
+                style: const TextStyle(fontSize: 10, color: Colors.black),
               ),
             ],
           ),

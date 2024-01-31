@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:giaodien/Thongtin.dart';
-
 import 'DoiKhang.dart';
 
 class BangXepHang extends StatefulWidget {
@@ -15,10 +13,11 @@ class BangXepHang extends StatefulWidget {
 class _BangXepHangState extends State<BangXepHang> {
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: 1080,
-        height: 1920,
+        width: screenSize.width,
+        height: screenSize.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/background.jpg"),
@@ -27,7 +26,7 @@ class _BangXepHangState extends State<BangXepHang> {
         child: Center(
           child: Column(children: [
             Container(
-              width: 1080,
+              width: screenSize.width,
               height: 60,
               color: Colors.white,
               child: Row(
@@ -48,8 +47,7 @@ class _BangXepHangState extends State<BangXepHang> {
                       );
                     },
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                  Center(
+                  const Expanded(
                     child: Text(
                       'Bảng Xếp Hạng',
                       style:
@@ -60,13 +58,13 @@ class _BangXepHangState extends State<BangXepHang> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 10)),
-            Image(
+            const Padding(padding: EdgeInsets.only(top: 10)),
+            const Image(
               image: AssetImage('images/top.png'),
               width: 100,
               height: 100,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 25),
             ),
             Container(
@@ -75,8 +73,8 @@ class _BangXepHangState extends State<BangXepHang> {
               color: Colors.white.withOpacity(0.5),
               child: Column(
                 children: [
-                  Padding(padding: EdgeInsets.only(top: 20)),
-                  new GestureDetector(
+                  const Padding(padding: EdgeInsets.only(top: 20)),
+                  GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -86,11 +84,11 @@ class _BangXepHangState extends State<BangXepHang> {
                           ),
                         );
                       },
-                      child: new Container(
+                      child: Container(
                         width: 300,
                         height: 40,
                         decoration: BoxDecoration(
-                          gradient: new LinearGradient(
+                          gradient: const LinearGradient(
                               colors: [
                                 Colors.white,
                                 Colors.grey,
@@ -104,7 +102,7 @@ class _BangXepHangState extends State<BangXepHang> {
                               tileMode: TileMode.repeated),
                           color: Colors.white.withOpacity(0.77),
                         ),
-                        child: Row(
+                        child: const Row(
                           children: [
                             Padding(padding: EdgeInsets.only(left: 10)),
                             Image(
@@ -129,8 +127,8 @@ class _BangXepHangState extends State<BangXepHang> {
                           ],
                         ),
                       )),
-                  Padding(padding: EdgeInsets.only(top: 20)),
-                  new GestureDetector(
+                  const Padding(padding: EdgeInsets.only(top: 20)),
+                  GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -140,11 +138,11 @@ class _BangXepHangState extends State<BangXepHang> {
                           ),
                         );
                       },
-                      child: new Container(
+                      child: Container(
                         width: 300,
                         height: 40,
                         decoration: BoxDecoration(
-                          gradient: new LinearGradient(
+                          gradient: const LinearGradient(
                               colors: [
                                 Colors.white,
                                 Colors.grey,
@@ -158,7 +156,7 @@ class _BangXepHangState extends State<BangXepHang> {
                               tileMode: TileMode.repeated),
                           color: Colors.white.withOpacity(0.77),
                         ),
-                        child: Row(
+                        child: const Row(
                           children: [
                             Padding(padding: EdgeInsets.only(left: 10)),
                             Image(

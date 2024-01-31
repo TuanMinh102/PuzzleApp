@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const KhoiPhucPass());
-}
-
 class KhoiPhucPass extends StatelessWidget {
   const KhoiPhucPass({super.key});
 

@@ -1,19 +1,6 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:giaodien/TrangChu.dart';
-// import 'package:giaodien/PhongDau.dart';
-// import 'package:giaodien/Thongtin.dart';
-
-// import 'NapCredit.dart';
-// import 'package:stroke_text/stroke_text.dart';
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-//   runApp(DiemCao());
-// }
 
 class DiemCao extends StatefulWidget {
   final String username;
@@ -51,11 +38,13 @@ class _DiemCaoState extends State<DiemCao> {
     fetchDatabaseList();
   }
 
+  @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: 1080,
-        height: 1920,
+        width: screenSize.width,
+        height: screenSize.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/background.jpg"),
@@ -65,7 +54,7 @@ class _DiemCaoState extends State<DiemCao> {
           child: Column(
             children: [
               Container(
-                width: 1080,
+                width: screenSize.width,
                 height: 60,
                 color: Colors.white,
                 child: Row(
@@ -87,8 +76,7 @@ class _DiemCaoState extends State<DiemCao> {
                         );
                       },
                     ),
-                    const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                    const Center(
+                    const Expanded(
                       child: Text(
                         'Điểm Cao',
                         style: TextStyle(

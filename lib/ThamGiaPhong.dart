@@ -42,9 +42,10 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
   }
 
   Widget container(var roomList) {
+    Size screenSize = MediaQuery.of(context).size;
     return Container(
-      width: 1080,
-      height: 1920,
+      width: screenSize.width,
+      height: screenSize.height,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("images/background.jpg"),
@@ -53,7 +54,7 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
       child: Center(
         child: Column(children: [
           Container(
-            width: 1080,
+            width: screenSize.width,
             height: 60,
             color: Colors.white,
             child: Row(
@@ -76,8 +77,7 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
                     );
                   },
                 ),
-                const Padding(padding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
-                const Center(
+                const Expanded(
                   child: Text(
                     'Tham Gia Phòng',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

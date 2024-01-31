@@ -1,49 +1,32 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'DoiKhang.dart';
 
-void main() {
-  runApp(const NapCreadit());
-}
-
-class NapCreadit extends StatelessWidget {
-  const NapCreadit({super.key});
+class NapCredit extends StatefulWidget {
+  final String username;
+  const NapCredit({super.key, required this.username});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  State<NapCredit> createState() => _NapCreditState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _NapCreditState extends State<NapCredit> {
   int item = 0;
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
-      width: 1080,
-      height: 1920,
-      decoration: new BoxDecoration(
-        image: new DecorationImage(
-          image: new AssetImage("images/background.jpg"),
+      width: screenSize.width,
+      height: screenSize.height,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("images/background.jpg"),
         ),
       ),
       child: Center(
         child: Column(children: [
           Container(
-            width: 1400,
+            width: screenSize.width,
             height: 60,
             color: Colors.white,
             child: Row(
@@ -55,14 +38,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   color: Colors.black,
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => const DoiKhang()),
-                    // );
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DoiKhang(
+                                username: widget.username,
+                              )),
+                    );
                   },
                 ),
-                Padding(padding: EdgeInsets.fromLTRB(0, 0, 120, 0)),
-                Center(
+                const Expanded(
                   child: Text(
                     'Nạp Credit',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -76,61 +62,62 @@ class _MyHomePageState extends State<MyHomePage> {
             margin: const EdgeInsets.only(left: 250, top: 10),
             width: 100,
             height: 40,
-            color: Colors.white,
+            color: const Color.fromARGB(255, 241, 241, 241),
             child: Row(
               children: [
-                Image(
+                const Image(
                   image: AssetImage('images/light-bulb.png'),
                   width: 70,
                   height: 30,
                 ),
                 Text(
                   '$item',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+          const Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
           FloatingActionButton.extended(
-            label: Text(
+            label: const Text(
               '10 / 20.000 VNĐ',
             ),
-            backgroundColor: Colors.grey,
-            icon: Image(
+            backgroundColor: Colors.white,
+            icon: const Image(
               image: AssetImage('images/light-bulb.png'),
               width: 30,
               height: 30,
             ),
             onPressed: () {},
           ),
-          Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+          const Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
           FloatingActionButton.extended(
-            label: Text('30 / 50.000 VNĐ'),
-            backgroundColor: Colors.grey,
-            icon: Image(
+            label: const Text('30 / 50.000 VNĐ'),
+            backgroundColor: Colors.white,
+            icon: const Image(
               image: AssetImage('images/light-bulb.png'),
               width: 30,
               height: 30,
             ),
             onPressed: () {},
           ),
-          Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+          const Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
           FloatingActionButton.extended(
-            label: Text('65 / 100.000 VNĐ'),
-            backgroundColor: Colors.grey,
-            icon: Image(
+            label: const Text('65 / 100.000 VNĐ'),
+            backgroundColor: Colors.white,
+            icon: const Image(
               image: AssetImage('images/light-bulb.png'),
               width: 30,
               height: 30,
             ),
             onPressed: () {},
           ),
-          Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+          const Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
           FloatingActionButton.extended(
-            label: Text('115 / 200.000 VNĐ'),
-            backgroundColor: Colors.grey,
-            icon: Image(
+            label: const Text('115 / 200.000 VNĐ'),
+            backgroundColor: Colors.white,
+            icon: const Image(
               image: AssetImage('images/light-bulb.png'),
               width: 30,
               height: 30,
