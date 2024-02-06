@@ -107,75 +107,73 @@ class _ThamGiaPhongState extends State<ThamGiaPhong> {
             child: Column(
               children: [
                 const Padding(padding: EdgeInsets.only(top: 20)),
-                for (int i = 0;
-                    i < roomList.length &&
-                        roomList[i]['finish'].toString() != 'true';
-                    i++)
-                  Container(
-                    width: 310,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          colors: [
-                            Colors.white,
-                            Colors.grey,
-                          ],
-                          stops: [
-                            0.0,
-                            1.0
-                          ],
-                          begin: FractionalOffset.topCenter,
-                          end: FractionalOffset.bottomCenter,
-                          tileMode: TileMode.repeated),
-                      color: Colors.white.withOpacity(0.77),
+                for (int i = 0; i < roomList.length; i++)
+                  if (roomList[i]['finish'] == 'false')
+                    Container(
+                      width: 320,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Colors.grey,
+                            ],
+                            stops: [
+                              0.0,
+                              1.0
+                            ],
+                            begin: FractionalOffset.topCenter,
+                            end: FractionalOffset.bottomCenter,
+                            tileMode: TileMode.repeated),
+                        color: Colors.white.withOpacity(0.77),
+                      ),
+                      child: Row(
+                        children: [
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          Text(
+                            'Id:' + roomList[i]['id'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          Container(
+                            width: 1,
+                            color: Colors.black,
+                            height: 30,
+                          ),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          Text(
+                            'Host:' + roomList[i]['host'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          Container(
+                            width: 1,
+                            color: Colors.black,
+                            height: 30,
+                          ),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          Text(
+                            'Players:' + roomList[i]['players'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          Container(
+                            width: 1,
+                            color: Colors.black,
+                            height: 30,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.login),
+                            onPressed: () {
+                              join(i, roomList);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          'Id:' + roomList[i]['id'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                        const Padding(padding: EdgeInsets.only(left: 5)),
-                        Container(
-                          width: 1,
-                          color: Colors.black,
-                          height: 30,
-                        ),
-                        const Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          'Host:' + roomList[i]['host'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                        const Padding(padding: EdgeInsets.only(left: 5)),
-                        Container(
-                          width: 1,
-                          color: Colors.black,
-                          height: 30,
-                        ),
-                        const Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          'Players:' + roomList[i]['players'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                        const Padding(padding: EdgeInsets.only(left: 5)),
-                        Container(
-                          width: 1,
-                          color: Colors.black,
-                          height: 30,
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.login),
-                          onPressed: () {
-                            join(i, roomList);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
               ],
             ),
           ),
